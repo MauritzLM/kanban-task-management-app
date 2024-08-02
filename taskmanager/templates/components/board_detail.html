@@ -1,0 +1,38 @@
+{# display columns and tasks of board #}
+
+{% if board %}
+    {# for each column in board #}
+    {% for column in board.columns.all %}
+
+        <div>
+            <h3>{{ column.name }}</h3>
+            {# list of tasks #}
+            <ul>
+                {% for task in column.tasks.all %}
+
+                    <li>
+                        <p>{{ task.title }}</p>
+
+                        {# subtasks #}
+                        {% for subtask in task.subtasks.all %}
+                            {# add number of completed subtasks #}
+                            <p>subtask name: {{ subtask.title }}</p>
+
+                        {% endfor %}
+
+                        <span>subtask count:
+                            {{ task.subtasks.all.count }}</span>
+
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <button hx-get="{% url 'new-column' id=board.id %}" hx-target="#form-wrapper">New column</button>
+        </div>
+
+    {% endfor %}
+
+{% else %}
+    <p>Select a board</p>
+
+{% endif %}

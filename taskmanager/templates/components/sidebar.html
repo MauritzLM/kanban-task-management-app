@@ -1,0 +1,35 @@
+{# display boards, add new board button #}
+
+<div class="sidebar-wrapper">
+    <div class="sidebar">
+        {% if all_boards %}
+            <h3>All boards ({{ all_boards|length }})</h3>
+
+            <ul>
+                {% for board in all_boards %}
+                    <li>
+                        <button hx-get="{% url 'board-detail' id=board.id %}" hx-target="#board-wrapper">{{ board.name }}</button>
+                    </li>
+
+                {% endfor %}
+            </ul>
+
+        {% endif %}
+        
+        {# display selected board #}
+        {% if board %}
+            <h2>{{ board.name }}</h2>
+        {% endif %}
+
+        <button hx-get="{% url 'new-board' %}" hx-target="#form-wrapper">Add new board</button>
+
+        <div>
+            <button>Manange board</button>
+            <div>
+                <button>edit board</button>
+                <button>delete board</button>
+            </div>
+
+        </div>
+    </div>
+</div>

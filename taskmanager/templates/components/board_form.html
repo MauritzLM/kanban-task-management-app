@@ -1,0 +1,9 @@
+
+<div id="form-modal" _="on closeModal remove me">
+<form action="" method="post">
+    <button class="close-btn" _="on click trigger closeModal">Close</button>
+    {% csrf_token %}
+    {{ form }}
+        <button type="submit">Submit</button>
+    </form>
+<div>    
