@@ -27,7 +27,7 @@
                 {% endfor %}
             </ul>
 
-            <button hx-get="{% url 'new-column' id=board.id %}" hx-target="#form-wrapper">New column</button>
+            <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper">New column</button>
         </div>
 
     {% endfor %}
