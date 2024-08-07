@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from django.forms import formset_factory
+from django.forms import modelformset_factory
 
 from .models import Board, Task, Column, SubTask
 
@@ -17,5 +17,5 @@ class ColumnForm(ModelForm):
 
 
 # create column formset
-ColumnFormSet = formset_factory(ColumnForm)
+ColumnFormSet = modelformset_factory(Column, exclude=['board', 'id'])
     
