@@ -14,14 +14,20 @@ class Board(models.Model):
     def get_absolute_url(self):
         return reverse('board-detail', args=[str(self.id)])
     
+    # rewrite save() method to return object
+    def save(self, *args, **kwargs):
+        # call real save method
+        super().save(*args, **kwargs)
+        return self
+    
 # column model
 class Column(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=50)
+    col_name = models.CharField(max_length=50)
     board = models.ForeignKey(Board, related_name='columns', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.col_name
 
 # task model
 class Task(models.Model):
@@ -34,12 +40,18 @@ class Task(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('task-detail', args=[str(self.id)])      
+        return reverse('task-detail', args=[str(self.id)])
+
+    # rewrite save() method to return object
+    def save(self, *args, **kwargs):
+        # call real save method
+        super().save(*args, **kwargs)
+        return self    
 
 # subtask model
 class SubTask(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    title = models.CharField(max_length=50)
+    sub_name = models.CharField(max_length=50)
     is_completed = models.BooleanField(default=False)
     task = models.ForeignKey(Task, related_name='subtasks', on_delete=models.CASCADE)
 
