@@ -5,7 +5,7 @@
     {% for column in board.columns.all %}
 
         <div>
-            <h3>{{ column.name }}</h3>
+            <h3>{{ column.col_name }}</h3>
             {# list of tasks #}
             <ul>
                 {% for task in column.tasks.all %}
@@ -26,11 +26,11 @@
                     </li>
                 {% endfor %}
             </ul>
-
-            <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper">New column</button>
         </div>
 
     {% endfor %}
+
+    <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper">New column</button>
 
 {% else %}
     <p>Select a board</p>
