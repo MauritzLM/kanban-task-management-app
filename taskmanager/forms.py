@@ -13,5 +13,9 @@ class BoardForm(ModelForm):
 class ColumnForm(ModelForm):
     class Meta:
         model = Column
-        fields = ['name']   
+        fields = ['col_name']
+
+
+# create column formset
+ColumnFormSet = formset_factory(ColumnForm)
     
