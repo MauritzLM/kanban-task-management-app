@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from asgiref.sync import sync_to_async
 
 from .helpers import build_new_formset
 from .models import Board, Column
@@ -49,22 +48,43 @@ def board_form(request):
 # edit board
 def edit_board(request, id):
     board_to_edit = get_object_or_404(Board, id=id)
-    board_columns = Column.objects.filter(board=id)
+    # create form from board instance
+    board_form = BoardForm(instance=board_to_edit)
+
+    # create formset from columns add initial data
+    board_columns = ColumnFormSet(queryset=Column.objects.filter(board=id))
 
     if request.method == 'POST':
-        board_form = BoardForm(request.POST)
-        column_form = ColumnFormSet(request.POST)
-        if board_form.is_valid() and column_form.is_valid():
+        board_form = BoardForm(request.POST, instance=board_to_edit)
+        column_formset = ColumnFormSet(request.POST)
+
+        if board_form.is_valid() and column_formset.is_valid():
             board_form.save()
-            column_form.save()
+            # new columns / updated columns*
+            # set column id
+            columns = column_formset.save(commit=False)
+            
+            # delete columns selected for delete
+            for obj in column_formset.deleted_objects:
+                obj.delete()
+
+            # save / update columns
+            for col in columns:
+                col.board = board_to_edit
+                col.save()
+
             return HttpResponseRedirect(reverse('index'))
+        else:
+            return render(request, 'components/edit_board_form.html', context={'title': 'edit',
+            'board_form': board_form,
+            'board_to_edit': board_to_edit,
+            'formset': board_columns})
     else:
         context = {
             'title': 'edit',
-            'board_form': BoardForm(),
-            'formset': ColumnFormSet(),
+            'board_form': board_form,
             'board_to_edit': board_to_edit,
-            'board_columns': board_columns
+            'formset': board_columns
         }
         
     return render(request, 'components/edit_board_form.html', context)
@@ -78,3 +98,7 @@ def column_form(request, current_total_formsets):
     }
     
     return render(request, 'components/column_form.html', context)
+
+def delete_board(request, id):
+    board_to_delete = get_object_or_404(Board, id=id)
+    return render(request, 'components/delete_board_form.html', context={'board': board_to_delete})
