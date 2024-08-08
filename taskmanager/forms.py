@@ -17,5 +17,5 @@ class ColumnForm(ModelForm):
 
 
 # create column formset
-ColumnFormSet = modelformset_factory(Column, exclude=['board', 'id'])
+ColumnFormSet = modelformset_factory(Column, exclude=['board', 'id'], extra=0, can_delete=True)
     
