@@ -1,0 +1,26 @@
+<div id="task-modal" _="on closeModal remove me">
+    <button type="button" class="close-btn" _="on click trigger closeModal">Close</button>
+    {# add button to toggle edit/delete box* #}
+    <div>
+        <button>edit task</button>
+        <button>delete task</button>
+    </div>
+    <h2>{{ task.title }}</h2>
+    <p>{{ task.description }}</p>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {# display subtasks with checkbox #}
+        {{ subtask_formset.management_form }}
+
+        {% for form in subtask_formset %}
+            {{ form }}
+        {% endfor %}
+
+        <div>
+            {{ task_form.column.as_field_group }}
+        </div>
+
+        <button>Save changes</button>
+    </form>
+</div>
