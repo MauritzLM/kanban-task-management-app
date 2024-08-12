@@ -1,36 +1,65 @@
-{# display columns and tasks of board #}
+{# board top bar #}
+<div>
+    {% if board %}
+        <h2>{{ board.name }}</h2>
 
-{% if board %}
-    {# for each column in board #}
-    {% for column in board.columns.all %}
+        {# new task button (disabled if no columns) #}
+        {% if board.columns.all|length > 0 %}
+            <button hx-get="{% url 'new-task' id=board.id %}" hx-target="#form-wrapper">Add new task</button>
+
+        {% else %}
+            <button disabled="disabled">Add new task</button>
+        {% endif %}
 
         <div>
-            <h3>{{ column.col_name }}</h3>
-            {# list of tasks #}
-            <ul>
-                {% for task in column.tasks.all %}
-
-                    <li>
-                        <p>{{ task.title }}</p>
-
-                        {# subtasks #}
-                        {% for subtask in task.subtasks.all %}
-                            {# add number of completed subtasks #}
-                            <p>subtask name: {{ subtask.title }}</p>
-
-                        {% endfor %}
-
-                        <span>subtask count:
-                            {{ task.subtasks.all.count }}</span>
-
-                    </li>
-                {% endfor %}
-            </ul>
+            <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper">edit board</button>
+            <button hx-get="{% url 'delete-board' id=board.id %}" hx-target="#form-wrapper">delete board</button>
         </div>
 
-    {% endfor %}
+    {% endif %}
+</div>
 
-    <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper">New column</button>
+{# display columns and tasks of board #}
+{% if board %}
+    {# if board is empty (format document creates icorrect space between list|length) #}
+    {% if board.columns.all|length == 0 %}
+
+        <p>This board is empty. Create a new column to get started.</p>
+        <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper">New column</button>
+
+    {% else %}
+        {# for each column in board #}
+        {% for column in board.columns.all %}
+
+            <div>
+                <h3>{{ column.col_name }}</h3>
+                {# list of tasks #}
+                <ul>
+                    {% for task in column.tasks.all %}
+
+                        <li hx-get="{% url 'view-task' id=board.id t_id=task.id %}" hx-trigger="click" hx-target="#form-wrapper">
+                            <p>{{ task.title }}</p>
+
+                            {# subtasks #}
+                            {% for subtask in task.subtasks.all %}
+                                {# add number of completed subtasks #}
+                                <p>subtask name:
+                                    {{ subtask.title }}</p>
+
+                            {% endfor %}
+
+                            <span>subtask count:
+                                {{ task.subtasks.all.count }}</span>
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        {% endfor %}
+
+        <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper">New column</button>
+    {% endif %}
 
 {% else %}
     <p>Select a board</p>
