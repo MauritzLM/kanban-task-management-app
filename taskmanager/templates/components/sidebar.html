@@ -16,27 +16,7 @@
 
         {% endif %}
 
-        {# display selected board #}
-        {% if board %}
-            <h2>{{ board.name }}</h2>
-        {% endif %}
-
         <button hx-get="{% url 'new-board' %}" hx-target="#form-wrapper">Add new board</button>
 
-        <div>
-            <button>Manange board</button>
-            {% if board %}
-                <div>
-                    <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper">edit board</button>
-                    <button hx-get="{% url 'delete-board' id=board.id %}" hxtarget="#form-wrapper">delete board</button>
-                </div>
-            {% else %}
-                <div>
-                    <button disabled="disabled">edit board</button>
-                    <button disabled="disabled">delete board</button>
-                </div>
-            {% endif %}
-
-        </div>
     </div>
 </div>
