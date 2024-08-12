@@ -1,0 +1,29 @@
+<div id="form-modal" _="on closeModal remove me">
+    <h2>{{ title }}
+        task</h2>
+    <form action="{% url 'new-task' id=board.id %}" method="post" novalidate="novalidate">
+        <button type="button" class="close-btn" _="on click trigger closeModal">Close</button>
+        {% csrf_token %}
+        {{ task_form.non_field_errors }}
+        <div>
+          {{ task_form.title.as_field_group }}
+        </div>
+
+        <div>
+          {{ task_form.description.as_field_group }}
+        </div>
+        
+        <h3>Subtasks</h3>
+        {# dynamic formsets #}
+        {{ subtask_formset.management_form }}
+        <div class="subtasks-wrapper">
+            <button type="button" hx-get="{% url 'add-subtask' subtask_formset.total_form_count %}" hx-target=".subtasks-wrapper" hx-swap="outerHTML">add new subtask</button>
+        </div>
+
+        <div>
+          {{ task_form.column.as_field_group }}
+        </div>
+
+        <button type="submit">create task</button>
+    </form>
+</div>

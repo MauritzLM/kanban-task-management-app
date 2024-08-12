@@ -1,0 +1,13 @@
+<div>
+    <input hx-swap-oob="true" type="hidden" name="form-TOTAL_FORMS" value="{{ new_total_formsets }}" id="id_form-TOTAL_FORMS"/>
+
+    <div _="on removeField remove me">
+        {{ new_formset }}
+        <button _="on click trigger removeField">X</button>
+    </div>
+
+    <button type="button" hx-trigger="click" hx-get="{% url 'add-column' new_total_formsets %}" hx-swap="outerHTML">
+        Add column
+    </button>
+
+</div>

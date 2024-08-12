@@ -1,0 +1,14 @@
+<div id="form-modal" _="on closeModal remove me">
+    <h2>Delete this board?</h2>
+    <form action="{% url 'delete-board' board_to_delete.id %}" method="post" novalidate="novalidate">
+
+        {% csrf_token %}
+        {{ delete_form }}
+        <p>Are you sure you want to delete the '{{board_to_delete.name}}' board? This action will remove all columns and tasks and cannot be reversed.</p>
+
+        <div>
+            <button type="submit">delete</button>
+            <button type="button" class="close-btn" _="on click trigger closeModal">Cancel</button>
+        </div>
+    </form>
+</div>
