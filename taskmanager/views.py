@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from .helpers import build_new_formset
 from .models import Board, Column, Task, SubTask
-from .forms import BoardForm, ColumnFormSet, DeleteBoardForm, TaskForm, SubTaskFormSet, TaskViewForm, TaskViewFormSet
+from .forms import BoardForm, ColumnFormSet, DeleteBoardForm, TaskForm, SubTaskFormSet, TaskViewForm, TaskViewFormSet, DeleteTaskForm
 
 # index page
 def index(request):
@@ -124,14 +124,34 @@ def delete_board(request, id):
 # task view
 def task_view(request, id, t_id):
     task = get_object_or_404(Task, id=t_id)
+    board = get_object_or_404(Board, id=id)
 
-    # handle post request*
+    # handle post request
+    if request.method == 'POST':
+        task_form = TaskViewForm(request.POST, instance=task)
+        subtask_formset = TaskViewFormSet(request.POST)
 
-    task_form = TaskViewForm(instance=task)
-    subtask_formset = TaskViewFormSet(queryset=SubTask.objects.filter(task=t_id))
+        if task_form.is_valid() and subtask_formset.is_valid():
+
+            updated_task = task_form.save()
+
+            # save subtasks
+            subtasks = subtask_formset.save(commit=False)
+            for sub in subtasks:
+                sub.task = updated_task
+                sub.save()
+
+            # redirect*
+            return HttpResponseRedirect(reverse('index'))
+    
+    else:
+        task_form = TaskViewForm(instance=task)
+        subtask_formset = TaskViewFormSet(queryset=SubTask.objects.filter(task=t_id))
+
+    # only add columns from selected board
     task_form.fields['column'].queryset = Column.objects.filter(board=id)
 
-    return render(request, 'components/task_view.html', context={'task': task, 'task_form': task_form, 'subtask_formset': subtask_formset})
+    return render(request, 'components/task_view.html', context={'board': board,'task': task, 'task_form': task_form, 'subtask_formset': subtask_formset})
     
 
 # create new task
@@ -158,8 +178,9 @@ def new_task(request, id):
     else:
         task_form = TaskForm()
         subtask_formset = SubTaskFormSet(queryset=SubTask.objects.none())
-        task_form.fields['column'].queryset = Column.objects.filter(board=id)    
 
+    # only add columns from selected board
+    task_form.fields['column'].queryset = Column.objects.filter(board=id)    
 
     return render(request, 'components/forms/task_form.html', context={'board': board,
             'task_form': task_form, 'subtask_formset': subtask_formset, 'title': 'New'})
@@ -168,23 +189,23 @@ def new_task(request, id):
 def edit_task(request, id, t_id):
     board = get_object_or_404(Board, id=id)
     task_to_edit = get_object_or_404(Task, id=t_id)
-    sub_tasks = SubTask.objects.filter(task=t_id)
 
     if request.method == 'POST':
         task_form = TaskForm(request.POST, instance=task_to_edit)
         subtask_formset = SubTaskFormSet(request.POST)
 
         if task_form.is_valid() and subtask_formset.is_valid():
+            # save task
             task_form.save()
-            # new columns / updated columns*
-            # set column id
+
+            # new subtasks / updated subtasks
             subtasks = subtask_formset.save(commit=False)
             
-            # delete columns selected for delete
+            # delete subtasks selected for delete
             for obj in subtask_formset.deleted_objects:
                 obj.delete()
 
-            # save / update columns
+            # save / update subtasks
             for sub in subtasks:
                 sub.task = task_to_edit
                 sub.save()
@@ -194,10 +215,32 @@ def edit_task(request, id, t_id):
     else:
         task_form = TaskForm(instance=task_to_edit)
         subtask_formset = SubTaskFormSet(queryset=SubTask.objects.filter(task=t_id))
-        task_form.fields['column'].queryset = Column.objects.filter(board=id)
 
-    return render(request, 'components/forms/task_form.html', context={'board': board,
-            'task_form': task_form, 'subtask_formset': subtask_formset, 'title': 'Edit'})    
+    # only add columns from selected board
+    task_form.fields['column'].queryset = Column.objects.filter(board=id)
+
+    return render(request, 'components/forms/edit_task_form.html', context={'board': board,
+            'task_form': task_form, 'subtask_formset': subtask_formset, 'title': 'Edit', 'task': task_to_edit})    
+
+# delete task
+def delete_task(request, t_id):
+    task_to_delete = get_object_or_404(Task, id=t_id)
+
+    if request.method == 'POST':
+        delete_form = DeleteTaskForm(request.POST, instance=task_to_delete)
+
+        if delete_form.is_valid():
+            task_to_delete.delete()
+
+        return HttpResponseRedirect(reverse('index'))
+    
+    else:
+        context = {
+            'task_to_delete': task_to_delete,
+            'delete_form': DeleteTaskForm(instance=task_to_delete)
+        }
+       
+    return render(request, 'components/forms/delete_task_form.html', context)
 
 
 # subtask form
