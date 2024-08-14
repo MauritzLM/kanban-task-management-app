@@ -33,6 +33,11 @@ class TaskForm(ModelForm):
             'column': _('Status'),
         }
 
+class DeleteTaskForm(ModelForm):
+    class Meta:
+        model = Task
+        fields = []        
+
 # for viewing task
 class TaskViewForm(ModelForm):
     class Meta:
