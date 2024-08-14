@@ -8,12 +8,14 @@ from .forms import BoardForm, ColumnFormSet, DeleteBoardForm, TaskForm, SubTaskF
 
 # index page
 def index(request):
+    # user logged in?
     all_boards = Board.objects.all()
     return render(request, 'index.html', context={'all_boards': all_boards})
 
-# BOARDS
+# BOARDS (login required)
 # view board
 def board_detail_view(request, id):
+    # user?
     board = get_object_or_404(Board, id=id)
     all_boards = Board.objects.all()
 
@@ -21,6 +23,7 @@ def board_detail_view(request, id):
 
 # create board
 def board_form(request):
+    # user?
     if request.method == 'POST':
         board_form = BoardForm(request.POST)
         column_formset = ColumnFormSet(request.POST)
@@ -48,6 +51,7 @@ def board_form(request):
 
 # edit board
 def edit_board(request, id):
+    # user*
     board_to_edit = get_object_or_404(Board, id=id)
     # create form from board instance
     board_form = BoardForm(instance=board_to_edit)
@@ -102,6 +106,7 @@ def column_form(request, current_total_formsets):
 
 # delete board
 def delete_board(request, id):
+    # user*
     board_to_delete = get_object_or_404(Board, id=id)
 
     if request.method == 'POST':
