@@ -1,6 +1,13 @@
-<h2>Login form</h2>
-<form action="{% url 'sign-up' %}" method="post">
-    {% csrf_token %}
-    {{ form }}
-        <button type="submit">Submit</button>
-</form>
+{% if user.is_authenticated %}
+    <p>You are already logged in.
+        <a href="{% url 'index' %}">Return to the home page.</a>
+    </p>
+{% else %}
+    <h2>Login form</h2>
+    <p>Need to <a href="{% url 'sign-up' %}">signup</a>?</p>
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">login</button>
+    </form>
+{% endif %}
