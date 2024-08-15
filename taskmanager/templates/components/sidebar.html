@@ -1,6 +1,9 @@
 {# display boards, add new board button #}
+{% if user.is_authenticated %}
+    <p>Welcome,
+        {{ user.username }}. Thanks for logging in.</p>
+    <a href="{% url 'logout' %}">Logout</a>
 
-<div class="sidebar-wrapper">
     <div class="sidebar">
         {% if all_boards %}
             <h3>All boards ({{ all_boards|length }})</h3>
@@ -19,4 +22,12 @@
         <button hx-get="{% url 'new-board' %}" hx-target="#form-wrapper">Add new board</button>
 
     </div>
-</div>
+
+{% else %}
+    <p>Welcome, new user. Please
+        <a href="{% url 'login' %}">log in.</a>
+    </p>
+    <p>or
+        <a href="{% url 'sign-up' %}">Signup</a>
+    </p>
+{% endif %}

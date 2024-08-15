@@ -23,7 +23,10 @@
       <nav>
         {# logo #}
         <p>LOGO</p>
-        {% include "./components/sidebar.html" %}
+        {# fetch sidebar #}
+        <div class="sidebar-wrapper" hx-get="{% url 'sidebar' %}" hx-trigger="load">
+
+        </div>
       </nav>
     </header>
 
