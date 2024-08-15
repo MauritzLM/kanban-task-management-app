@@ -1,41 +1,52 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from .helpers import build_new_formset
 from .models import Board, Column, Task, SubTask
 from .forms import BoardForm, ColumnFormSet, DeleteBoardForm, TaskForm, SubTaskFormSet, TaskViewForm, TaskViewFormSet, DeleteTaskForm
 
 # index page
-def index(request):
-    # user logged in?
-    all_boards = Board.objects.all()
-    return render(request, 'index.html', context={'all_boards': all_boards})
+def index(request): 
+    return render(request, 'index.html')
+     
+# sidebar
+@login_required
+def get_sidebar(request):
+    all_boards = Board.objects.filter(user=request.user)
+
+    return render(request, 'components/sidebar.html', context={'all_boards': all_boards})
 
 # BOARDS (login required)
 # view board
+@login_required
 def board_detail_view(request, id):
-    # user?
+    # user logged in
     board = get_object_or_404(Board, id=id)
     all_boards = Board.objects.all()
 
     return render(request, 'components/board_detail.html', context={'board': board, 'all_boards': all_boards})
 
 # create board
+@login_required
 def board_form(request):
-    # user?
     if request.method == 'POST':
         board_form = BoardForm(request.POST)
         column_formset = ColumnFormSet(request.POST)
 
         if board_form.is_valid() and column_formset.is_valid():
             # save board and get object
-            created_board = board_form.save()  
+            board_name = board_form.cleaned_data['name']
+            board_user = request.user
+
+            created_board = Board(name=board_name, user=board_user)
+            saved_board = created_board.save()  
 
             # set column id
             columns = column_formset.save(commit=False)
             for col in columns:
-                col.board = created_board
+                col.board = saved_board
                 col.save()
 
             return HttpResponseRedirect(reverse('index'))
@@ -50,8 +61,8 @@ def board_form(request):
 
 
 # edit board
+@login_required
 def edit_board(request, id):
-    # user*
     board_to_edit = get_object_or_404(Board, id=id)
     # create form from board instance
     board_form = BoardForm(instance=board_to_edit)
@@ -95,6 +106,7 @@ def edit_board(request, id):
     return render(request, 'components/forms/edit_board_form.html', context)
 
 # column form
+@login_required
 def column_form(request, current_total_formsets):
     new_formset = build_new_formset(ColumnFormSet(), current_total_formsets)
     context = {
@@ -105,8 +117,8 @@ def column_form(request, current_total_formsets):
     return render(request, 'components/forms/column_form.html', context)
 
 # delete board
+@login_required
 def delete_board(request, id):
-    # user*
     board_to_delete = get_object_or_404(Board, id=id)
 
     if request.method == 'POST':
@@ -127,6 +139,7 @@ def delete_board(request, id):
 
 # TASKS
 # task view
+@login_required
 def task_view(request, id, t_id):
     task = get_object_or_404(Task, id=t_id)
     board = get_object_or_404(Board, id=id)
@@ -160,6 +173,7 @@ def task_view(request, id, t_id):
     
 
 # create new task
+@login_required
 def new_task(request, id):
     board = get_object_or_404(Board, id=id)
     
@@ -178,7 +192,7 @@ def new_task(request, id):
                 sub.save()
 
             # redirect*
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('board-detail', args=[board.id]))
 
     else:
         task_form = TaskForm()
@@ -191,6 +205,7 @@ def new_task(request, id):
             'task_form': task_form, 'subtask_formset': subtask_formset, 'title': 'New'})
 
 # edit task
+@login_required
 def edit_task(request, id, t_id):
     board = get_object_or_404(Board, id=id)
     task_to_edit = get_object_or_404(Task, id=t_id)
@@ -228,6 +243,7 @@ def edit_task(request, id, t_id):
             'task_form': task_form, 'subtask_formset': subtask_formset, 'title': 'Edit', 'task': task_to_edit})    
 
 # delete task
+@login_required
 def delete_task(request, t_id):
     task_to_delete = get_object_or_404(Task, id=t_id)
 
@@ -249,6 +265,7 @@ def delete_task(request, t_id):
 
 
 # subtask form
+@login_required
 def subtask_form(request, current_total_formsets):
     new_formset = build_new_formset(SubTaskFormSet(), current_total_formsets)
     context = {
