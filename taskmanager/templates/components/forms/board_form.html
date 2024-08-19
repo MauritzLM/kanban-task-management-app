@@ -1,7 +1,7 @@
 <div id="form-modal" _="on closeModal remove me">
     <h2>{{ title }}
         board</h2>
-    <form action="{% url 'new-board' %}" method="post" novalidate="novalidate">
+    <form hx-post="{% url 'new-board' %}" novalidate="novalidate">
         <button type="button" class="close-btn" _="on click trigger closeModal">Close</button>
         {% csrf_token %}
         {{ board_form }}
