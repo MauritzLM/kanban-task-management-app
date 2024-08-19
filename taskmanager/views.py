@@ -9,14 +9,17 @@ from .forms import BoardForm, ColumnFormSet, DeleteBoardForm, TaskForm, SubTaskF
 
 # index page
 def index(request): 
-    return render(request, 'index.html')
+    return render(request, 'base.html')
      
 # sidebar
-@login_required
 def get_sidebar(request):
-    all_boards = Board.objects.filter(user=request.user)
+    # if user is logged in get user boards
+    if request.user.is_authenticated:
+        all_boards = Board.objects.filter(user=request.user)
 
-    return render(request, 'components/sidebar.html', context={'all_boards': all_boards})
+        return render(request, 'components/sidebar.html', context={'all_boards': all_boards})
+
+    return render(request, 'components/sidebar.html')
 
 # BOARDS (login required)
 # view board
@@ -50,8 +53,6 @@ def board_form(request):
                 col.save()
 
             return HttpResponseRedirect(reverse('index'))
-        
-        # validate column fields*
 
     else:
         board_form = BoardForm()
