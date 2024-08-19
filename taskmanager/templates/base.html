@@ -24,16 +24,18 @@
         {# logo #}
         <p>LOGO</p>
         {# fetch sidebar #}
-        <div class="sidebar-wrapper" hx-get="{% url 'sidebar' %}" hx-trigger="load">
-
-        </div>
+        <div class="sidebar-wrapper" hx-get="{% url 'sidebar' %}" hx-trigger="load"></div>
       </nav>
     </header>
 
     <main>
-      {% block content %}{% endblock %}
+      {# selected board #}
+      <div id="board-wrapper" hx-target="this"></div>
+
+      {# form modal #}
+      <div id="form-wrapper" hx-target="this"></div>
     </main>
-    
+
     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
     <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
   </body>
