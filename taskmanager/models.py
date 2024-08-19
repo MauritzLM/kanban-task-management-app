@@ -41,9 +41,6 @@ class Task(models.Model):
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return reverse('task-detail', args=[str(self.id)])
-
     # rewrite save() method to return object
     def save(self, *args, **kwargs):
         # call real save method
@@ -59,6 +56,3 @@ class SubTask(models.Model):
 
     def __str__(self):
         return self.sub_name
-    
-    def get_absolute_url(self):
-        return reverse('subtask-detail', args=[str(self.id)])
