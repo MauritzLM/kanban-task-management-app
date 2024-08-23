@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from django.forms import modelformset_factory
 from django import forms
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from .models import Board, Task, Column, SubTask
 
@@ -20,14 +21,32 @@ class ColumnForm(ModelForm):
     class Meta:
         model = Column
         fields = ['col_name']
+        widgets= {
+            'col_name': forms.TextInput(attrs={'placeholder': 'e.g Todo'})
+            }
+    
+    # can't submit empty form
+    def __init__(self, *arg, **kwarg):
+        super(ColumnForm, self).__init__(*arg, **kwarg)
+        self.empty_permitted = False    
+    
+    # custom name field error message
+    def clean(self):
+        # call clean method
+        cleaned_data = super(ColumnForm, self).clean()
+        name = cleaned_data.get('col_name')
+        
+        if not name:
+            self.add_error('col_name', ValidationError(_('Can\'t be empty'), code='required'))     
+
+        return cleaned_data
 
 
 # create column formset
 ColumnFormSet = modelformset_factory(Column,
-                                     exclude=['board', 'id'],
+                                     form=ColumnForm,
                                      extra=0,
                                      can_delete=True,
-                                     widgets={'col_name': forms.TextInput(attrs={'placeholder': 'e.g Todo'})},  
                                     )
 
 # for create new and edit
@@ -60,14 +79,14 @@ class TaskViewForm(ModelForm):
 
 
 SubTaskFormSet = modelformset_factory(SubTask,
-                                       exclude=['task', 'id', 'is_completed'],
+                                       fields=['sub_name'],
                                         extra=0,
                                         can_delete=True,
                                         widgets={'sub_name': forms.TextInput(attrs={'placeholder': 'e.g. Drink coffee and smile.'})},
                                         )
 
 TaskViewFormSet = modelformset_factory(SubTask,
-                                       exclude=['task', 'id'],
+                                       exclude=['sub_name', 'is_completed'],
                                        extra=0,
                                        widgets={'sub_name': forms.TextInput(attrs={'placeholder': 'e.g. Drink coffee and smile.'})},
                                        )  
