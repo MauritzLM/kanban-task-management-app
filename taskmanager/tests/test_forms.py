@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from taskmanager.forms import BoardForm, TaskForm, TaskViewForm, DeleteBoardForm, DeleteTaskForm, ColumnFormSet, SubTaskFormSet, TaskViewFormSet
+from taskmanager.forms import BoardForm, ColumnForm, TaskForm, TaskViewForm, DeleteBoardForm, DeleteTaskForm, ColumnFormSet, SubTaskFormSet, TaskViewFormSet
 from taskmanager.models import Board, Column, Task, SubTask
 
 # board form
@@ -30,14 +30,31 @@ class BoardFormTest(TestCase):
         self.assertEqual(len(errors_name), 1)
         self.assertEqual(errors_name[0].code, 'required')
 
-# delete form*
+# delete form
 class DeleteBoardFormTest(TestCase):
-    def test_valid_form(self):
-        board = Board.objects.create(name='Platform Launch')
-        form = DeleteBoardForm(instance=board)
+    def test_valid_delete_board_form(self):
+        form = DeleteBoardForm({})
         self.assertTrue(form.is_valid())    
 
+# column form
+class ColumnFormTest(TestCase):
+    def test_empty_columnform(self):
+        form = ColumnForm()
+        self.assertIn('col_name', form.fields)
+
 # column formset
+class ColumnFormsetTest(TestCase):
+    # test validation
+    def test_valid_column_formset(self):
+        form_data = {'form-TOTAL_FORMS': '2','form-INITIAL_FORMS': '0', 'form-0-col_name': 'todo', 'form-1-col_name': 'doing'}
+        formset = ColumnFormSet(form_data)
+        self.assertTrue(formset.is_valid())
+    
+    # test empty form should not validate
+    def test_invalid_column_formset(self):
+        form_data = {'form-TOTAL_FORMS': '1','form-INITIAL_FORMS': '0', 'form-0-col_name': ''}
+        formset = ColumnFormSet(form_data)
+        self.assertFalse(formset.is_valid())    
 
 
 # task form
