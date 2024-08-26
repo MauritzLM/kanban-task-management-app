@@ -16,7 +16,6 @@ class DeleteBoardForm(ModelForm):
         model = Board
         fields = []    
 
-
 class ColumnForm(ModelForm):
     class Meta:
         model = Column
@@ -24,6 +23,11 @@ class ColumnForm(ModelForm):
         widgets= {
             'col_name': forms.TextInput(attrs={'placeholder': 'e.g Todo'})
             }
+        error_messages = {
+            'col_name': {
+                'required': _('Can\'t be empty'),
+            },
+        }
     
     # can't submit empty form
     def __init__(self, *arg, **kwarg):
@@ -37,12 +41,12 @@ class ColumnForm(ModelForm):
         name = cleaned_data.get('col_name')
         
         if not name:
-            self.add_error('col_name', ValidationError(_('Can\'t be empty'), code='required'))     
+            raise ValidationError(_(''), code='required')     
 
         return cleaned_data
 
 
-# create column formset
+# formset used in board forms
 ColumnFormSet = modelformset_factory(Column,
                                      form=ColumnForm,
                                      extra=0,
@@ -78,13 +82,42 @@ class TaskViewForm(ModelForm):
         }
 
 
+class SubTaskForm(ModelForm):
+    class Meta:
+        model = SubTask
+        fields=['sub_name']
+        widgets={'sub_name': forms.TextInput(attrs={'placeholder': 'e.g. Drink coffee and smile.'})}
+        error_messages = {
+            'sub_name': {
+                'required': _('Can\'t be empty'),
+            },
+        }
+
+     # can't submit empty form
+    def __init__(self, *arg, **kwarg):
+        super(SubTaskForm, self).__init__(*arg, **kwarg)
+        self.empty_permitted = False    
+    
+    # custom name field error message
+    def clean(self):
+        # call clean method
+        cleaned_data = super(SubTaskForm, self).clean()
+        name = cleaned_data.get('sub_name')
+        
+        if not name:
+            raise ValidationError(_(''), code='required')    
+
+        return cleaned_data
+
+
+# formset used in new task and edit task forms
 SubTaskFormSet = modelformset_factory(SubTask,
-                                       fields=['sub_name'],
+                                        form=SubTaskForm,
                                         extra=0,
                                         can_delete=True,
-                                        widgets={'sub_name': forms.TextInput(attrs={'placeholder': 'e.g. Drink coffee and smile.'})},
                                         )
 
+# formset used in task view (can mark completed)
 TaskViewFormSet = modelformset_factory(SubTask,
                                        exclude=['sub_name', 'is_completed'],
                                        extra=0,
