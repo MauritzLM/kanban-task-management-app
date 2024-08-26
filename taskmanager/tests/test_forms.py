@@ -29,6 +29,8 @@ class BoardFormTest(TestCase):
         errors_name = form['name'].errors.as_data()
         self.assertEqual(len(errors_name), 1)
         self.assertEqual(errors_name[0].code, 'required')
+        # error message (better way to get value?)*
+        self.assertEqual(''.join(form.errors['name']), 'Can\'t be empty')
 
 # delete form
 class DeleteBoardFormTest(TestCase):
@@ -106,6 +108,8 @@ class TaskFormTest(TestCase):
         errors_title = form['title'].errors.as_data()
         self.assertEqual(len(errors_title), 1)
         self.assertEqual(errors_title[0].code, 'required')
+        # error message
+        self.assertEqual(''.join(form.errors['title']), 'Can\'t be empty')
 
         # column error
         errors_column = form['column'].errors.as_data()
