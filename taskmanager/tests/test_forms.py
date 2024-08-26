@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from taskmanager.forms import BoardForm, ColumnForm, TaskForm, TaskViewForm, DeleteBoardForm, DeleteTaskForm, ColumnFormSet, SubTaskFormSet, TaskViewFormSet
+from taskmanager.forms import BoardForm, ColumnForm, TaskForm, TaskViewForm, DeleteBoardForm, DeleteTaskForm,SubTaskForm, ColumnFormSet, SubTaskFormSet, TaskViewFormSet
 from taskmanager.models import Board, Column, Task, SubTask
 
 # board form
@@ -54,10 +54,13 @@ class ColumnFormsetTest(TestCase):
     def test_invalid_column_formset(self):
         form_data = {'form-TOTAL_FORMS': '1','form-INITIAL_FORMS': '0', 'form-0-col_name': ''}
         formset = ColumnFormSet(form_data)
-        self.assertFalse(formset.is_valid())    
+        errors = formset.errors
+        self.assertFalse(formset.is_valid()) 
+        # error msg
+        self.assertEqual(errors[0]['col_name'][0], 'Can\'t be empty')
+           
 
-
-# task form
+# task forms
 class TaskFormTest(TestCase):
     # test form fields
     def test_empty_taskform(self):
@@ -140,3 +143,34 @@ class TaskViewFormTest(TestCase):
         form = TaskViewForm(data=form_data)
         self.assertFalse(form.is_valid())
 
+
+# subtask forms
+class SubTaskFormTest(TestCase):
+    # test form fields
+    def test_empty_subtaskform(self):
+        form = SubTaskForm()
+        self.assertIn('sub_name', form.fields)
+
+# subtask formset
+class SubTaskFormsetTest(TestCase):
+    # test validation
+    def test_valid_subtask_formset(self):
+        form_data = {'form-TOTAL_FORMS': '2','form-INITIAL_FORMS': '0', 'form-0-sub_name': 'drink coffee', 'form-1-sub_name': 'smile'}
+        formset = SubTaskFormSet(form_data)
+        self.assertTrue(formset.is_valid())
+    
+    # test empty form should not validate
+    def test_invalid_subtask_formset(self):
+        form_data = {'form-TOTAL_FORMS': '1','form-INITIAL_FORMS': '0', 'form-0-sub_name': ''}
+        formset = SubTaskFormSet(form_data)
+        errors = formset.errors
+        self.assertFalse(formset.is_valid())
+        # error msg
+        self.assertEqual(errors[0]['sub_name'][0], 'Can\'t be empty')
+
+# taskview formset
+class TaskViewFormsetTest(TestCase):
+    # test validation
+    def test_valid_taskview_formset(self):
+        formset = TaskViewFormSet({'form-TOTAL_FORMS': '2','form-INITIAL_FORMS': '0'})
+        self.assertTrue(formset.is_valid()) 
