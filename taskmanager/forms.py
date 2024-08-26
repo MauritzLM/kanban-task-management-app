@@ -10,6 +10,12 @@ class BoardForm(ModelForm):
     class Meta:
         model = Board
         fields = ['name']
+        error_messages = {
+            'name': {
+                'required': _('Can\'t be empty'),
+            }
+        }
+
 
 class DeleteBoardForm(ModelForm):
     class Meta:
@@ -64,6 +70,11 @@ class TaskForm(ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'e.g. Take a 15 minute break'}),
             'description': forms.Textarea(attrs={'placeholder': 'e.g. Its always good to take a break. This 15 minute break will recharge the batteries a little.'}),
+        }
+        error_messages = {
+            'title': {
+                'required': _('Can\'t be empty'),
+            }
         }
         
 
