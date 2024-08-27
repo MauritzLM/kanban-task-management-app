@@ -27,9 +27,8 @@ def get_sidebar(request):
 def board_detail_view(request, id):
     # user logged in
     board = get_object_or_404(Board, id=id)
-    all_boards = Board.objects.all()
 
-    return render(request, 'components/board_detail.html', context={'board': board, 'all_boards': all_boards})
+    return render(request, 'components/board_detail.html', context={'board': board})
 
 # create board
 @login_required
