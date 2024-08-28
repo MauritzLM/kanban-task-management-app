@@ -64,12 +64,7 @@ def board_form(request):
 @login_required
 def edit_board(request, id):
     board_to_edit = get_object_or_404(Board, id=id)
-    # create form from board instance
-    board_form = BoardForm(instance=board_to_edit)
-
-    # create formset from columns add initial data
-    board_columns = ColumnFormSet(queryset=Column.objects.filter(board=id))
-
+    
     if request.method == 'POST':
         board_form = BoardForm(request.POST, instance=board_to_edit)
         column_formset = ColumnFormSet(request.POST)
@@ -90,20 +85,15 @@ def edit_board(request, id):
                 col.save()
 
             return HttpResponseRedirect(reverse('index'))
-        else:
-            return render(request, 'components/forms/edit_board_form.html', context={'title': 'edit',
-            'board_form': board_form,
-            'board_to_edit': board_to_edit,
-            'formset': board_columns})
+
     else:
-        context = {
-            'title': 'edit',
-            'board_form': board_form,
-            'board_to_edit': board_to_edit,
-            'formset': board_columns
-        }
-        
-    return render(request, 'components/forms/edit_board_form.html', context)
+        # create form from board instance
+        board_form = BoardForm(instance=board_to_edit)
+        # create formset from board columns
+        column_formset = ColumnFormSet(queryset=Column.objects.filter(board=id).order_by('col_name'))
+       
+    return render(request, 'components/forms/edit_board_form.html', context={'title': 'edit', 'board_form': board_form, 'board_to_edit': board_to_edit, 'formset': column_formset})
+
 
 # column form
 @login_required
@@ -164,7 +154,7 @@ def task_view(request, id, t_id):
     
     else:
         task_form = TaskViewForm(instance=task)
-        subtask_formset = TaskViewFormSet(queryset=SubTask.objects.filter(task=t_id))
+        subtask_formset = TaskViewFormSet(queryset=SubTask.objects.filter(task=t_id).order_by('-is_completed'))
 
     # only add columns from selected board
     task_form.fields['column'].queryset = Column.objects.filter(board=id)
@@ -230,11 +220,11 @@ def edit_task(request, id, t_id):
                 sub.task = task_to_edit
                 sub.save()
 
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('board-detail', args=[board.id]))
     
     else:
         task_form = TaskForm(instance=task_to_edit)
-        subtask_formset = SubTaskFormSet(queryset=SubTask.objects.filter(task=t_id))
+        subtask_formset = SubTaskFormSet(queryset=SubTask.objects.filter(task=t_id).order_by('sub_name'))
 
     # only add columns from selected board
     task_form.fields['column'].queryset = Column.objects.filter(board=id)
