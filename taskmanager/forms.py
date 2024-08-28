@@ -74,6 +74,9 @@ class TaskForm(ModelForm):
         error_messages = {
             'title': {
                 'required': _('Can\'t be empty'),
+            },
+            'column' : {
+                'required': _('You need to select a column')
             }
         }
         
@@ -126,12 +129,12 @@ SubTaskFormSet = modelformset_factory(SubTask,
                                         form=SubTaskForm,
                                         extra=0,
                                         can_delete=True,
+                                        widgets={'sub_name': forms.TextInput(attrs={'placeholder': 'e.g. Drink coffee and smile.'})}
                                         )
 
 # formset used in task view (can mark completed)
 TaskViewFormSet = modelformset_factory(SubTask,
-                                       exclude=['sub_name', 'is_completed'],
+                                       exclude=['task'],
                                        extra=0,
-                                       widgets={'sub_name': forms.TextInput(attrs={'placeholder': 'e.g. Drink coffee and smile.'})},
                                        )  
     
