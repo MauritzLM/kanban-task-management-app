@@ -115,6 +115,8 @@ class TaskFormTest(TestCase):
         errors_column = form['column'].errors.as_data()
         self.assertEqual(len(errors_column), 1)
         self.assertEqual(errors_column[0].code, 'required')
+        # error message
+        self.assertEqual(''.join(form.errors['column']), 'You need to select a column')
 
     # test placeholder text
 
@@ -174,7 +176,8 @@ class SubTaskFormsetTest(TestCase):
 
 # taskview formset
 class TaskViewFormsetTest(TestCase):
+    # fields, is completed
     # test validation
     def test_valid_taskview_formset(self):
-        formset = TaskViewFormSet({'form-TOTAL_FORMS': '2','form-INITIAL_FORMS': '0'})
-        self.assertTrue(formset.is_valid()) 
+        formset = TaskViewFormSet({'form-TOTAL_FORMS': '2','form-INITIAL_FORMS': '0', 'form-0-sub_name': 'drink coffee', 'form-0-is_completed': 'True', 'form-1-sub_name': 'smile', 'form-0-is_completed': 'False'})
+        self.assertTrue(formset.is_valid())
