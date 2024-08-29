@@ -1,17 +1,18 @@
 {# display boards, add new board button #}
 {% if user.is_authenticated %}
+<div class="sidebar">
     <p>Welcome,
         {{ user.username }}. Thanks for logging in.</p>
     <a href="{% url 'logout' %}">Logout</a>
 
-    <div class="sidebar">
+    
         {% if all_boards %}
             <h3>All boards ({{ all_boards|length }})</h3>
 
             <ul>
                 {% for board in all_boards %}
                     <li>
-                        <button hx-get="{% url 'board-detail' id=board.id %}" hx-target="#board-wrapper">{{ board.name }}</button>
+                        <a href="{{ board.get_absolute_url }}">{{ board.name }}</a>
                     </li>
 
                 {% endfor %}
@@ -19,9 +20,7 @@
 
         {% endif %}
 
-        <button hx-get="{% url 'new-board' %}" hx-target="#form-wrapper">Add new board</button>
-
-    </div>
+        <button hx-get="{% url 'new-board' %}" hx-target="#form-wrapper" _="on click toggle .cs-active on .sidebar-wrapper">Add new board</button>
 
 {% else %}
     <p>Welcome, new user. Please
@@ -30,4 +29,9 @@
     <p>or
         <a href="{% url 'sign-up' %}">Signup</a>
     </p>
+</div>    
 {% endif %}
+
+{# add dark mode toggle* #}
+
+{# hide sidebar button (tablet/desktop)* #}
