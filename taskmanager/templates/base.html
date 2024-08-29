@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +13,9 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    {% block extrahead %}{% endblock %}
+
     {% block title %}
       <title>Taskapp</title>
     {% endblock %}
@@ -19,22 +23,29 @@
   </head>
 
   <body>
+   <div id="container">
     <header>
       <nav>
         {# logo #}
         <p>LOGO</p>
         {# fetch sidebar #}
         <div class="sidebar-wrapper" hx-get="{% url 'sidebar' %}" hx-trigger="load"></div>
+        <button _="on click toggle .cs-active on .sidebar-wrapper"><img alt="" src="{% static 'images/icon-chevron-down.svg' %}"/></button>
       </nav>
     </header>
 
     <main>
       {# selected board #}
-      <div id="board-wrapper" hx-target="this"></div>
+      <div id="board-wrapper">
+      {% block content %}
+        
+      {% endblock %} 
+      </div>
 
       {# form modal #}
       <div id="form-wrapper" hx-target="this"></div>
     </main>
+   </div> 
 
     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
     <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
