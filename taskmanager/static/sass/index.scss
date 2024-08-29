@@ -1,0 +1,113 @@
+:root {
+    --primary: #635FC7;
+    --primary-light: #A8A4FF;
+
+    --grey-100: #F4F7FD;
+    --grey-200: #E4EBFA;
+    --grey-500: #828FA3;
+    --grey-600: #3E3F4E;
+    --grey-700: #2B2C37;
+    --grey-800: #20212C;
+    --grey-900: #000112;
+
+    --error: #EA5555;
+    --error-light: #FF9898;
+}
+
+/* plus-jakarta-sans-regular - latin */
+@font-face {
+    font-display: swap;
+    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/plus-jakarta-sans-v8-latin-regular.woff2') format('woff2');
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* plus-jakarta-sans-500 - latin */
+@font-face {
+    font-display: swap;
+    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/plus-jakarta-sans-v8-latin-500.woff2') format('woff2');
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* plus-jakarta-sans-700 - latin */
+@font-face {
+    font-display: swap;
+    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/plus-jakarta-sans-v8-latin-700.woff2') format('woff2');
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+// GENERAIL STYLES
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+}
+
+// NAV / SIDEBAR STYLES
+nav {
+    .sidebar-wrapper {
+        width: 100vw;
+        height: 100vh;
+        padding: 1em;
+        background-color: rgba(0, 0, 0, 0.247);
+        position: fixed;
+        // height of top bar
+        top: 80px;
+        opacity: 0;
+        z-index: -10;
+
+        &.cs-active {
+            opacity: 1;
+            z-index: 100;
+            &:before {
+                width: 100%;
+                opacity: 1;
+            }
+    
+            .sidebar {
+                opacity: 1;
+                transform: scaleX(1);
+                transition-delay: 0.2s;
+            }
+        }
+
+        .sidebar {
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            background-color: #2B2C37;
+            top: 10px;
+            left: auto;
+            right: 0;
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: top;
+            transition: transform 0.4s, opacity 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4em;
+        }
+    }
+}
+
+// FORMS
