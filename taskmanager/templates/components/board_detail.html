@@ -6,26 +6,6 @@
 {# board top bar #}
 {% block content %}
 
-    <div>
-        {% if board %}
-            <h2>{{ board.name }}</h2>
-
-            {# new task button (disabled if no columns) #}
-            {% if board.columns.all|length > 0 %}
-                <button hx-get="{% url 'new-task' id=board.id %}" hx-target="#form-wrapper">Add new task</button>
-
-            {% else %}
-                <button disabled="disabled">Add new task</button>
-            {% endif %}
-
-            <div>
-                <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper">edit board</button>
-                <button hx-get="{% url 'delete-board' id=board.id %}" hx-target="#form-wrapper">delete board</button>
-            </div>
-
-        {% endif %}
-    </div>
-
     {# display columns and tasks of board #}
     {% if board %}
         {# if board is empty (format document creates icorrect space between list|length) #}
