@@ -1,4 +1,8 @@
-.columns-container {
-    display: flex;
-    gap: 24px;
+#board-wrapper {
+    background-color: var(--background-color-main);
+
+    .columns-container {
+        display: flex;
+        gap: 24px;
+    }
 }

@@ -1,4 +1,7 @@
-.columns-container {
+#board-wrapper {
+  background-color: var(--background-color-main);
+}
+#board-wrapper .columns-container {
   display: flex;
   gap: 24px;
 }
