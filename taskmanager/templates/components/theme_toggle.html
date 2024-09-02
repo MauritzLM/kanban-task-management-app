@@ -1,0 +1,13 @@
+{% load static %}
+<div>
+    <img alt="light" src="{% static 'images/icon-light-theme.svg' %}" aria-hidden="true" height="15px" width="15px" loading="lazy" decoding="async"/>
+    
+    {# toggle switch #}
+    <label class="switch">
+        <input type="checkbox" _="on change toggle .dark on #container">
+        <span class="slider round"></span>
+    </label>
+
+    <img alt="dark" src="{% static 'images/icon-dark-theme.svg' %}" aria-hidden="true" height="15px" width="15px" loading="lazy" decoding="async"/>
+
+</div>
