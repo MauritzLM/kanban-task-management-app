@@ -23,29 +23,77 @@
   </head>
 
   <body>
-   <div id="container">
-    <header>
-      <nav>
-        {# logo #}
-        <p>LOGO</p>
-        {# fetch sidebar #}
-        <div class="sidebar-wrapper" hx-get="{% url 'sidebar' %}" hx-trigger="load"></div>
-        <button _="on click toggle .cs-active on .sidebar-wrapper"><img alt="" src="{% static 'images/icon-chevron-down.svg' %}"/></button>
-      </nav>
-    </header>
+    <div id="container">
+      <header>
+        <nav>
+          {# logo #}
+          <div class="logo"><img alt="logo" src="{% static 'images/logo-mobile.svg' %}"/><img alt="logo-name" src="{% static 'images/logo-dark.svg' %}"/></div>
+          {# fetch sidebar #}
+          <div class="sidebar-wrapper" hx-get="{% url 'sidebar' %}" hx-trigger="load"></div>
 
-    <main>
-      {# selected board #}
-      <div id="board-wrapper">
-      {% block content %}
-        
-      {% endblock %} 
-      </div>
+          <div class="selected-board">
+            {% if board %}
+              <div class="board-name">
+                <h2>{{ board.name }}</h2>
+                {# nav toggle button #}
+                <button class="nav-toggle-btn" _="on click toggle .cs-active on .sidebar-wrapper
+                       on click toggle .cs-active on .nav-img"><img class="nav-img" alt="" src="{% static 'images/icon-chevron-down.svg' %}"/></button>
+              </div>
 
-      {# form modal #}
-      <div id="form-wrapper" hx-target="this"></div>
-    </main>
-   </div> 
+              <div>
+                {# new task button (disabled if no columns) #}
+                {% if board.columns.all|length > 0 %}
+                  <button class="new-task-btn" hx-get="{% url 'new-task' id=board.id %}" hx-target="#form-wrapper">
+                    +
+                    <span>add new task</span></button>
+
+                  <button class="edit-toggle" _="on click toggle .cs-active on .board-edit"><img alt="" src="{% static 'images/icon-vertical-ellipsis.svg' %}" aria-hidden="true"/></button>
+
+                  <div class="edit-wrapper">
+                    <div class="board-edit">
+                      <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper">edit board</button>
+                      <button hx-get="{% url 'delete-board' id=board.id %}" hx-target="#form-wrapper">delete board</button>
+                    </div>
+                  </div>
+
+                  {# empty board - disabled buttons #}
+                {% else %}
+                  <button class="new-task-btn" disabled="disabled">
+                     +
+                    <span>add new task</span></button>
+
+                  <button class="edit-toggle" _="on click toggle .cs-active on .board-edit" disabled="disabled"><img alt="" src="{% static 'images/icon-vertical-ellipsis.svg' %}" aria-hidden="true"/></button>
+
+                  <div class="edit-wrapper">
+                    <div class="board-edit">
+                      <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper">edit board</button>
+                      <button hx-get="{% url 'delete-board' id=board.id %}" hx-target="#form-wrapper">delete board</button>
+                    </div>
+                  </div>
+                {% endif %}
+
+              {% else %}
+                {# nav toggle button #}
+                <button class="nav-toggle-btn" _="on click toggle .cs-active on .sidebar-wrapper
+                       on click toggle .cs-active on .nav-img"><img class="nav-img" alt="" src="{% static 'images/icon-chevron-down.svg' %}"/></button>
+
+              {% endif %}
+            </div>
+          </div>
+
+        </nav>
+      </header>
+
+      <main>
+        {# selected board #}
+        <div id="board-wrapper">
+          {% block content %}{% endblock %}
+        </div>
+
+        {# form modal #}
+        <div id="form-wrapper" hx-target="this"></div>
+      </main>
+    </div>
 
     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
     <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
