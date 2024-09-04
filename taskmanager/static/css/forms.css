@@ -1,0 +1,97 @@
+/* form modal / wrapper / general styles */
+#form-wrapper {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.247);
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: -10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#form-wrapper.cs-active {
+  opacity: 1;
+  z-index: 100;
+}
+#form-wrapper #form-modal {
+  background-color: var(--background-color-surface);
+  border-radius: 6px;
+  padding: 24px;
+  position: relative;
+  width: 90%;
+  max-width: 480px;
+  color: var(--text-color);
+}
+#form-wrapper #form-modal h2 {
+  margin: 0;
+  font-size: 18px;
+}
+#form-wrapper #form-modal .close-btn {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}
+#form-wrapper #form-modal .btn-primary,
+#form-wrapper #form-modal .btn-secondary {
+  width: 100%;
+  padding: 9px;
+}
+#form-wrapper #form-modal .btn-primary {
+  margin-top: 24px;
+}
+#form-wrapper #form-modal .btn-secondary {
+  margin-top: 12px;
+}
+#form-wrapper #form-modal label,
+#form-wrapper #form-modal .label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--grey-500);
+  margin-bottom: 8px;
+  margin-top: 24px;
+}
+#form-wrapper #form-modal input {
+  appearance: none;
+  font: inherit;
+  width: 100%;
+  background: none;
+}
+#form-wrapper #form-modal input[type=text],
+#form-wrapper #form-modal select,
+#form-wrapper #form-modal textarea {
+  appearance: none;
+  font: inherit;
+  width: 100%;
+  background: none;
+  color: var(--text-color);
+  padding: 9px 16px;
+  border: 1px solid rgba(130, 143, 163, 0.3568627451);
+  border-radius: 6px;
+}
+#form-wrapper #form-modal input[type=text]::placeholder,
+#form-wrapper #form-modal select::placeholder,
+#form-wrapper #form-modal textarea::placeholder {
+  color: var(--grey-500);
+  opacity: 0.5;
+}
+#form-wrapper #form-modal select {
+  background: url("/static/images/icon-chevron-down.svg");
+  background-position: right 16px center;
+  background-repeat: no-repeat;
+}
+#form-wrapper #form-modal select:focus {
+  outline: 1px solid var(--primary);
+}
+#form-wrapper #form-modal select option {
+  background-color: var(--background-color-edit-box);
+  color: var(--grey-500);
+  padding: 16px;
+}
+
+/* board form */
+
+/*# sourceMappingURL=forms.css.map */
