@@ -1,9 +1,73 @@
 #board-wrapper {
   background-color: var(--background-color-main);
+  height: 100vh;
+}
+#board-wrapper .empty-board {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px;
+  gap: 25px;
+}
+#board-wrapper .empty-board p {
+  color: var(--grey-500);
+  margin: 0;
+  text-align: center;
+}
+#board-wrapper .empty-board .btn-primary {
+  width: 174px;
+  padding: 15px 0;
+  align-self: center;
+  border-radius: 24px;
+  font-size: 15px;
+  line-height: 19px;
 }
 #board-wrapper .columns-container {
   display: flex;
   gap: 24px;
+  padding: 24px 16px;
+  height: 100%;
+  overflow: auto;
+}
+#board-wrapper .columns-container .column {
+  min-width: 280px;
+}
+#board-wrapper .columns-container .column h3 {
+  color: var(--grey-500);
+  text-transform: uppercase;
+  display: flex;
+  gap: 12px;
+  margin-top: 0;
+  margin-bottom: 24px;
+  min-width: max-content;
+}
+#board-wrapper .columns-container .column h3 .dot {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background-color: aqua;
+}
+#board-wrapper .columns-container .column ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+#board-wrapper .columns-container .column ul li {
+  background-color: var(--background-color-surface);
+  border-radius: 8px;
+  padding: 23px 16px;
+  width: 280px;
+}
+#board-wrapper .columns-container .btn-new-column {
+  height: 100%;
+  min-width: 280px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
+  color: var(--grey-500);
+  background-color: var(--grey-700);
+  border-radius: 6px;
 }
 
 /*# sourceMappingURL=board.css.map */
