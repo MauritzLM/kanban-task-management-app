@@ -10,6 +10,9 @@ class BoardForm(ModelForm):
     class Meta:
         model = Board
         fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'e.g. Roadmap'}),
+        }
         error_messages = {
             'name': {
                 'required': _('Can\'t be empty'),
