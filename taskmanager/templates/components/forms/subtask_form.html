@@ -1,13 +1,14 @@
+{% load static %}
 <div>
     <input hx-swap-oob="true" type="hidden" name="form-TOTAL_FORMS" value="{{ new_total_formsets }}" id="id_form-TOTAL_FORMS"/>
 
     <div _="on removeField remove me">
         {{ new_formset }}
-        <button _="on click trigger removeField">X</button>
+        <button _="on click trigger removeField"><img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/></button>
     </div>
 
-    <button type="button" hx-trigger="click" hx-get="{% url 'add-subtask' new_total_formsets %}" hx-target=".subtasks-wrapper" hx-swap="beforeend" _="on click remove me">
-        Add new subtask
+    <button class="btn-secondary" type="button" hx-trigger="click" hx-get="{% url 'add-subtask' new_total_formsets %}" hx-target=".subtasks-wrapper" hx-swap="beforeend" _="on click remove me">
+        + Add new subtask
     </button>
 
 </div>

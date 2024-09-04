@@ -1,5 +1,7 @@
-<div id="task-modal" _="on closeModal remove me">
-    <button type="button" class="close-btn" _="on click trigger closeModal">Close</button>
+{% load static %}
+<div id="form-modal" _="on closeModal remove me">
+    <button type="button" class="close-btn" _="on click remove .cs-active from #form-wrapper
+                                                on click trigger closeModal"><img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/></button>
     {# add button to toggle edit/delete box* #}
     <div>
         <button hx-get="{% url 'edit-task' id=board.id t_id=task.id %}" hx-target="#form-wrapper">edit task</button>

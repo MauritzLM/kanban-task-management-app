@@ -1,8 +1,9 @@
+{% load static %}
 <div id="form-modal" _="on closeModal remove me">
-    <h2>{{ title }}
-        task</h2>
+    <h2>{{ title }}</h2>
     <form hx-post="{% url 'edit-task' id=board.id t_id=task.id %}" novalidate="novalidate">
-        <button type="button" class="close-btn" _="on click trigger closeModal">Close</button>
+        <button type="button" class="close-btn" _="on click remove .cs-active from #form-wrapper
+                                                    on click trigger closeModal"><img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/></button>
         {% csrf_token %}
         {{ task_form.non_field_errors }}
         <div>
@@ -17,7 +18,7 @@
         {# dynamic formsets #}
         {{ subtask_formset.management_form }}
         <div class="subtasks-wrapper">
-            {# load in columns #}
+            {# load in subtasks #}
             {% for form in subtask_formset %}
                 <div _="on removeField remove me">
                     {{ form.id }}
@@ -25,16 +26,16 @@
                     <label for="{{ form.sub_name.id_for_label }}">Col_name</label>
                     {{ form.DELETE }}
                     {{ form.sub_name }}
-                    <button _="on click trigger removeField">X</button>
+                    <button _="on click trigger removeField"><img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/></button>
                 </div>
             {% endfor %}
-            <button type="button" hx-get="{% url 'add-subtask' subtask_formset.total_form_count %}" hx-target=".subtasks-wrapper" hx-swap="beforeend" _="on click remove me">add new subtask</button>
+            <button class="btn-secondary" type="button" hx-get="{% url 'add-subtask' subtask_formset.total_form_count %}" hx-target=".subtasks-wrapper" hx-swap="beforeend" _="on click remove me">+ Add New Subtask</button>
         </div>
 
         <div>
             {{ task_form.column.as_field_group }}
         </div>
 
-        <button type="submit">save changes</button>
+        <button class="btn-primary" type="submit">Save Changes</button>
     </form>
 </div>
