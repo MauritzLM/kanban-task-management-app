@@ -57,7 +57,7 @@ def board_form(request):
         board_form = BoardForm()
         column_formset = ColumnFormSet(queryset=Column.objects.none())
             
-    return render(request, 'components/forms/board_form.html', context={'board_form': board_form, 'formset': column_formset, 'title': 'New'})
+    return render(request, 'components/forms/board_form.html', context={'board_form': board_form, 'formset': column_formset, 'title': 'Add New Board'})
 
 
 # edit board
@@ -92,7 +92,7 @@ def edit_board(request, id):
         # create formset from board columns
         column_formset = ColumnFormSet(queryset=Column.objects.filter(board=id).order_by('col_name'))
        
-    return render(request, 'components/forms/edit_board_form.html', context={'title': 'edit', 'board_form': board_form, 'board_to_edit': board_to_edit, 'formset': column_formset})
+    return render(request, 'components/forms/edit_board_form.html', context={'title': 'Edit Board', 'board_form': board_form, 'board_to_edit': board_to_edit, 'formset': column_formset})
 
 
 # column form
@@ -192,7 +192,7 @@ def new_task(request, id):
     task_form.fields['column'].queryset = Column.objects.filter(board=id)    
 
     return render(request, 'components/forms/task_form.html', context={'board': board,
-            'task_form': task_form, 'subtask_formset': subtask_formset, 'title': 'New'})
+            'task_form': task_form, 'subtask_formset': subtask_formset, 'title': 'Add New Task'})
 
 # edit task
 @login_required
@@ -230,7 +230,7 @@ def edit_task(request, id, t_id):
     task_form.fields['column'].queryset = Column.objects.filter(board=id)
 
     return render(request, 'components/forms/edit_task_form.html', context={'board': board,
-            'task_form': task_form, 'subtask_formset': subtask_formset, 'title': 'Edit', 'task': task_to_edit})    
+            'task_form': task_form, 'subtask_formset': subtask_formset, 'title': 'Edit Task', 'task': task_to_edit})    
 
 # delete task
 @login_required
