@@ -29,8 +29,11 @@ class ColumnForm(ModelForm):
     class Meta:
         model = Column
         fields = ['col_name']
+        labels = {
+            'col_name': '',
+        }
         widgets= {
-            'col_name': forms.TextInput(attrs={'placeholder': 'e.g Todo'})
+            'col_name': forms.TextInput(attrs={'placeholder': 'e.g. Todo'})
             }
         error_messages = {
             'col_name': {
