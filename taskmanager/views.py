@@ -56,6 +56,7 @@ def board_form(request):
     else:
         board_form = BoardForm()
         column_formset = ColumnFormSet(queryset=Column.objects.none())
+   
             
     return render(request, 'components/forms/board_form.html', context={'board_form': board_form, 'formset': column_formset, 'title': 'Add New Board'})
 
@@ -97,14 +98,25 @@ def edit_board(request, id):
 
 # column form
 @login_required
-def column_form(request, current_total_formsets):
-    new_formset = build_new_formset(ColumnFormSet(), current_total_formsets)
-    context = {
+def column_form(request, current_total_formsets, type):
+    if type == 'add':
+        new_total_formsets = current_total_formsets + 1
+        new_formset = build_new_formset(ColumnFormSet(), new_total_formsets)
+        context = {
         'new_formset': new_formset,
-        'new_total_formsets': current_total_formsets + 1,
-    }
+        'new_total_formsets': new_total_formsets,
+        }
+         
+        return render(request, 'components/forms/column_form.html', context) 
+
+    if type == 'remove':
+        new_total_formsets = current_total_formsets - 1
+        context = {
+        'new_total_formsets': new_total_formsets,
+        }
+
+        return render(request, 'components/forms/remove_formset.html', context)  
     
-    return render(request, 'components/forms/column_form.html', context)
 
 # delete board
 @login_required
