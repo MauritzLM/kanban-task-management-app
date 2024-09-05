@@ -94,7 +94,7 @@
             background: url("/static/images/icon-chevron-down.svg");
             background-position: right 16px center;
             background-repeat: no-repeat;
-        
+
             &:focus {
                 outline: 1px solid var(--primary);
             }
@@ -104,6 +104,28 @@
                 color: var(--grey-500);
                 padding: 16px;
             }
+        }
+
+        .columns-wrapper {
+            .new-column-form {
+                display: grid;
+                grid-template-columns: 2fr 1fr 1fr;
+                margin-bottom: 12px;
+
+                label {
+                    display: none;
+                }
+
+                input[type="checkbox"] {
+                    width: 20px;
+                    height: 20px;
+                    border: 1px solid var(--grey-500);
+                }
+            }
+
+            .hidden {
+                display: none;
+            } 
         }
     }
 }

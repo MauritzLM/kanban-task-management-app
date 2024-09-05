@@ -91,6 +91,22 @@
   color: var(--grey-500);
   padding: 16px;
 }
+#form-wrapper #form-modal .columns-wrapper .new-column-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  margin-bottom: 12px;
+}
+#form-wrapper #form-modal .columns-wrapper .new-column-form label {
+  display: none;
+}
+#form-wrapper #form-modal .columns-wrapper .new-column-form input[type=checkbox] {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--grey-500);
+}
+#form-wrapper #form-modal .columns-wrapper .hidden {
+  display: none;
+}
 
 /* board form */
 

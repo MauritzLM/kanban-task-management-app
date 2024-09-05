@@ -140,6 +140,10 @@ a {
   color: var(--grey-900);
 }
 
+.hidden {
+  display: none;
+}
+
 nav {
   display: flex;
   position: relative;
