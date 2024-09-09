@@ -41,10 +41,10 @@ class ColumnForm(ModelForm):
             },
         }
     
-    # can't submit empty form
-    def __init__(self, *arg, **kwarg):
-        super(ColumnForm, self).__init__(*arg, **kwarg)
-        self.empty_permitted = False    
+    # can't submit empty form ( not in use )
+    # def __init__(self, *arg, **kwarg):
+    #     super(ColumnForm, self).__init__(*arg, **kwarg)
+    #     self.empty_permitted = False    
     
     # custom name field error message
     def clean(self):
@@ -142,5 +142,6 @@ SubTaskFormSet = modelformset_factory(SubTask,
 TaskViewFormSet = modelformset_factory(SubTask,
                                        exclude=['task'],
                                        extra=0,
+                                       widgets={'sub_name': forms.TextInput(attrs={'disabled': 'disabled'})}
                                        )  
     
