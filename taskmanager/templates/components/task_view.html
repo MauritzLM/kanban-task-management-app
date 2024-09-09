@@ -1,28 +1,38 @@
 {% load static %}
-<div id="form-modal" _="on closeModal remove me">
-    <button type="button" class="close-btn" _="on click remove .cs-active from #form-wrapper
+<div id="form-modal" _="on closeModal remove me" class="task-view">
+    <button type="button" class="close-btn-task" _="on click remove .cs-active from #form-wrapper
                                                 on click trigger closeModal"><img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/></button>
-    {# add button to toggle edit/delete box* #}
-    <div>
-        <button hx-get="{% url 'edit-task' id=board.id t_id=task.id %}" hx-target="#form-wrapper">edit task</button>
-        <button hx-get="{% url 'delete-task' t_id=task.id %}" hx-target="#form-wrapper">delete task</button>
+    {# task edit toggle #}
+    <button class="edit-toggle" _="on click toggle .cs-active on .task-edit"><img alt="" src="{% static 'images/icon-vertical-ellipsis.svg' %}" aria-hidden="true"/></button>
+    <div class="edit-wrapper">
+        <div class="task-edit">
+            <button hx-get="{% url 'edit-task' id=board.id t_id=task.id %}" hx-target="#form-wrapper">edit task</button>
+            <button hx-get="{% url 'delete-task' t_id=task.id %}" hx-target="#form-wrapper">delete task</button>
+        </div>
     </div>
-    <h2>{{ task.title }}</h2>
-    <p>{{ task.description }}</p>
 
-    <form action="{% url 'view-task' id=board.id t_id=task.id %}" method="post">
+    <h2 class="heading-large">{{ task.title }}</h2>
+    <p>{{ task.description }}</p>
+     
+     {# display: Subtasks ({completed} of {total})* add completed #}
+     <p class="subtasks-count">Subtasks ( of {{ task.subtasks.all.count }})</p>
+
+    <form action="{% url 'view-task' id=board.id t_id=task.id %}" method="post" class="task-view-form">
         {% csrf_token %}
         {# display subtasks with checkbox #}
         {{ subtask_formset.management_form }}
 
         {% for form in subtask_formset %}
-            {{ form }}
+            <div class="form-group">
+                {{ form.is_completed }}
+                {{ form.sub_name }}
+            </div>
         {% endfor %}
 
         <div>
             {{ task_form.column.as_field_group }}
         </div>
 
-        <button type="submit">Save changes</button>
+        <button type="submit" class="btn-primary">Save changes</button>
     </form>
 </div>

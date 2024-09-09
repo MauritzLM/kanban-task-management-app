@@ -1,7 +1,7 @@
 {% load static %}
 <div id="form-modal" _="on closeModal remove me">
   <h2>{{ title }}</h2>
-  <form hx-post="{% url 'new-task' id=board.id %}" novalidate="novalidate">
+  <form hx-post="{% url 'new-task' id=board.id %}" novalidate="novalidate" class="task-form">
     <button type="button" class="close-btn" _="on click remove .cs-active from #form-wrapper
                                                 on click trigger closeModal"><img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/></button>
     {% csrf_token %}
@@ -17,9 +17,9 @@
     <h3>Subtasks</h3>
     {# dynamic formsets #}
     {{ subtask_formset.management_form }}
-    <div class="subtasks-wrapper">
+    <div class="subtasks-wrapper formset-wrapper">
       {% for form in subtask_formset %}
-        <div _="on removeField remove me">
+        <div class="form" _="on removeField remove me">
           {{ form }}
             <button type="button" _="on click trigger removeField"><img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/></button>
           </div>

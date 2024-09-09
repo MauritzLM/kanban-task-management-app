@@ -1,5 +1,5 @@
 <div id="form-modal" _="on closeModal remove me">
-    <h2>Delete this board?</h2>
+    <h2 class="heading-large danger">Delete this board?</h2>
     <form hx-post="{% url 'delete-board' board_to_delete.id %}" novalidate="novalidate">
 
         {% csrf_token %}
@@ -7,8 +7,8 @@
         <p>Are you sure you want to delete the '{{board_to_delete.name}}' board? This action will remove all columns and tasks and cannot be reversed.</p>
 
         <div>
-            <button type="submit">delete</button>
-            <button type="button" class="close-btn btn-secondary" _="on click remove .cs-active from #form-wrapper 
+            <button type="submit" class="btn-delete">delete</button>
+            <button type="button" class="btn-secondary" _="on click remove .cs-active from #form-wrapper 
                                                         on click trigger closeModal">Cancel</button>
         </div>
     </form>

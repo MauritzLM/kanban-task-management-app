@@ -1,7 +1,7 @@
 {% load static %}
 <div id="form-modal" _="on closeModal remove me">
     <h2>{{ title }}</h2>
-    <form hx-post="{% url 'edit-task' id=board.id t_id=task.id %}" novalidate="novalidate">
+    <form hx-post="{% url 'edit-task' id=board.id t_id=task.id %}" novalidate="novalidate" class="task-form">
         <button type="button" class="close-btn" _="on click remove .cs-active from #form-wrapper
                                                     on click trigger closeModal"><img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/></button>
         {% csrf_token %}
@@ -17,16 +17,19 @@
         <h3>Subtasks</h3>
         {# dynamic formsets #}
         {{ subtask_formset.management_form }}
-        <div class="subtasks-wrapper">
+        <div class="subtasks-wrapper formset-wrapper">
             {# load in subtasks #}
             {% for form in subtask_formset %}
-                <div _="on removeField remove me">
-                    {{ form.id }}
-                    {{ form.sub_name.errors }}
-                    <label for="{{ form.sub_name.id_for_label }}">Col_name</label>
-                    {{ form.DELETE }}
-                    {{ form.sub_name }}
-                    <button _="on click trigger removeField"><img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/></button>
+                <div class="edit-form">
+                   {{ form.id }}
+                    <div>
+                        {{ form.sub_name.errors }}
+                        {{ form.sub_name }}
+                    </div>
+                    <div>
+                        <span>Remove subtask</span>
+                        {{ form.DELETE }}
+                    </div>
                 </div>
             {% endfor %}
             <button class="btn-secondary" type="button" hx-get="{% url 'add-subtask' subtask_formset.total_form_count %}" hx-target=".subtasks-wrapper" hx-swap="beforeend" _="on click remove me">+ Add New Subtask</button>
