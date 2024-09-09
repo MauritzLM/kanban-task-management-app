@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
@@ -37,6 +37,8 @@ def board_form(request):
         board_form = BoardForm(request.POST)
         column_formset = ColumnFormSet(request.POST)
 
+        print(request.POST)
+
         if board_form.is_valid() and column_formset.is_valid():
             # save board and get object
             board_name = board_form.cleaned_data['name']
@@ -45,14 +47,16 @@ def board_form(request):
             created_board = Board(name=board_name, user=board_user)
             saved_board = created_board.save()  
 
-            # set column id
             columns = column_formset.save(commit=False)
             for col in columns:
+                # dont save empty forms
+                # set column id
                 col.board = saved_board
-                col.save()
-
-            return HttpResponseRedirect(reverse('index'))
-
+                col.save() 
+            
+            return HttpResponse()
+        
+        # update column formset to include only not empty ones
     else:
         board_form = BoardForm()
         column_formset = ColumnFormSet(queryset=Column.objects.none())
@@ -98,25 +102,18 @@ def edit_board(request, id):
 
 # column form
 @login_required
-def column_form(request, current_total_formsets, type):
-    if type == 'add':
-        new_total_formsets = current_total_formsets + 1
-        new_formset = build_new_formset(ColumnFormSet(), new_total_formsets)
-        context = {
+def column_form(request, current_total_formsets):
+   
+    new_total_formsets = current_total_formsets + 1
+    new_formset = build_new_formset(ColumnFormSet(), new_total_formsets)
+    context = {
         'new_formset': new_formset,
         'new_total_formsets': new_total_formsets,
-        }
-         
-        return render(request, 'components/forms/column_form.html', context) 
+    }
 
-    if type == 'remove':
-        new_total_formsets = current_total_formsets - 1
-        context = {
-        'new_total_formsets': new_total_formsets,
-        }
+    return render(request, 'components/forms/column_form.html', context) 
 
-        return render(request, 'components/forms/remove_formset.html', context)  
-    
+   
 
 # delete board
 @login_required
@@ -145,6 +142,8 @@ def delete_board(request, id):
 def task_view(request, id, t_id):
     task = get_object_or_404(Task, id=t_id)
     board = get_object_or_404(Board, id=id)
+
+    # get amount of subtasks completed and add to context
 
     # handle post request
     if request.method == 'POST':
