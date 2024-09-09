@@ -16,11 +16,12 @@
 
 html[data-theme=light] {
   --text-color: var(--grey-900);
-  --background-color-main: var(--grey-200);
+  --background-color-main: var(--grey-100);
   --background-color-surface: #FFF;
   --background-color-edit-box: #FFF;
   --secondary-btn-bg: #625fc72c;
   --text-color: var(--grey-900);
+  --background-color-column-btn: var(--grey-200);
 }
 
 html[data-theme=dark] {
@@ -30,6 +31,7 @@ html[data-theme=dark] {
   --background-color-edit-box: var(--grey-800);
   --secondary-btn-bg: #FFF;
   --text-color: #FFF;
+  --background-color-column-btn: var(--grey-700);
 }
 
 /* plus-jakarta-sans-regular - latin */
@@ -135,13 +137,21 @@ button {
   font-weight: 700;
 }
 
+.btn-delete {
+  background-color: var(--error);
+  color: #FFF;
+  border-radius: 20px;
+  text-transform: capitalize;
+  font-weight: 700;
+}
+
+.danger {
+  color: var(--error);
+}
+
 a {
   text-decoration: none;
   color: var(--grey-900);
-}
-
-.hidden {
-  display: none;
 }
 
 nav {
@@ -210,6 +220,7 @@ nav .sidebar-wrapper .sidebar .auth-status {
 }
 nav .sidebar-wrapper .sidebar .auth-status p {
   text-transform: capitalize;
+  margin: 0;
 }
 nav .sidebar-wrapper .sidebar .auth-status a {
   color: var(--primary);
@@ -289,6 +300,8 @@ nav .selected-board .new-task-btn span {
 }
 nav .selected-board .edit-toggle {
   display: flex;
+  width: 30px;
+  justify-content: center;
 }
 nav .selected-board .board-name {
   display: flex;
