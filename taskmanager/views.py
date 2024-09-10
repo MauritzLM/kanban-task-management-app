@@ -143,8 +143,6 @@ def task_view(request, id, t_id):
     task = get_object_or_404(Task, id=t_id)
     board = get_object_or_404(Board, id=id)
 
-    # get amount of subtasks completed and add to context
-
     # handle post request
     if request.method == 'POST':
         task_form = TaskViewForm(request.POST, instance=task)
@@ -161,7 +159,7 @@ def task_view(request, id, t_id):
                 sub.save()
 
             # redirect*
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('board-detail', args=[board.id]))
     
     else:
         task_form = TaskViewForm(instance=task)
