@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load board_extras %}
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'css/board.css' %}">
 {% endblock %}
@@ -31,13 +32,9 @@
                                     <p class="heading-medium">{{ task.title }}</p>
 
                                     {# subtasks #}
-                                    {% for subtask in task.subtasks.all %}
+                                    
                                         {# add number of completed subtasks* #}
-                                        <p>subtask name:
-                                            {{ subtask.sub_name }}</p>
-
-                                    {% endfor %}
-
+                                        <p>{{ task.subtasks.all|count_subtasks_completed }} of {{ task.subtasks.all.count }} subtasks</p>
                                 </li>
                             {% endfor %}
                         </ul>

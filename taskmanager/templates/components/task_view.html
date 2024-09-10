@@ -1,4 +1,5 @@
 {% load static %}
+{% load board_extras %}
 <div id="form-modal" _="on closeModal remove me" class="task-view">
     <button type="button" class="close-btn-task" _="on click remove .cs-active from #form-wrapper
                                                 on click trigger closeModal"><img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/></button>
@@ -13,9 +14,10 @@
 
     <h2 class="heading-large">{{ task.title }}</h2>
     <p>{{ task.description }}</p>
-     
-     {# display: Subtasks ({completed} of {total})* add completed #}
-     <p class="subtasks-count">Subtasks ( of {{ task.subtasks.all.count }})</p>
+
+    {# display: Subtasks ({completed} of {total})* add completed #}
+    <p class="subtasks-count">Subtasks ({{ task.subtasks.all|count_subtasks_completed }} of
+        {{ task.subtasks.all.count }})</p>
 
     <form action="{% url 'view-task' id=board.id t_id=task.id %}" method="post" class="task-view-form">
         {% csrf_token %}
@@ -24,7 +26,9 @@
 
         {% for form in subtask_formset %}
             <div class="form-group">
+                {{form.id}}
                 {{ form.is_completed }}
+                
                 {{ form.sub_name }}
             </div>
         {% endfor %}
