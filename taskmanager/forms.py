@@ -142,6 +142,6 @@ SubTaskFormSet = modelformset_factory(SubTask,
 TaskViewFormSet = modelformset_factory(SubTask,
                                        exclude=['task'],
                                        extra=0,
-                                       widgets={'sub_name': forms.TextInput(attrs={'disabled': 'disabled'})}
+                                       widgets={'sub_name': forms.TextInput(attrs={'readonly': 'readonly'})}
                                        )  
     
