@@ -1,6 +1,6 @@
 <div id="form-modal" _="on closeModal remove me">
     <h2>Delete this task?</h2>
-    <form hx-post="{% url 'delete-task' task_to_delete.id %}" novalidate="novalidate">
+    <form action="{% url 'delete-task' task_to_delete.id %}" method="post" novalidate="novalidate">
 
         {% csrf_token %}
         {{ delete_form }}
