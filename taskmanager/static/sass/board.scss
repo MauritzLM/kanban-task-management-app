@@ -63,7 +63,22 @@
                     background-color: var(--background-color-surface);
                     border-radius: 8px;
                     padding: 23px 16px;
-                    width: 280px; 
+                    width: 280px;
+                    box-shadow: 2px 2px 3px var(--box-shadow-color);
+                    cursor: pointer;
+
+                    p {
+                        &:nth-child(1) {
+                            margin: 0;
+                        }
+
+                        &:nth-child(2) {
+                            color: var(--grey-500);
+                            font-size: 13px;
+                            line-height: 23px;
+                            margin-bottom: 0;
+                        }
+                    }
                 }
             }
         }
