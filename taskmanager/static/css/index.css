@@ -22,6 +22,7 @@ html[data-theme=light] {
   --secondary-btn-bg: #625fc72c;
   --text-color: var(--grey-900);
   --background-color-column-btn: var(--grey-200);
+  --box-shadow-color: var(--grey-200);
 }
 
 html[data-theme=dark] {
@@ -32,6 +33,7 @@ html[data-theme=dark] {
   --secondary-btn-bg: #FFF;
   --text-color: #FFF;
   --background-color-column-btn: var(--grey-700);
+  --box-shadow-color: var(--grey-800);
 }
 
 /* plus-jakarta-sans-regular - latin */
