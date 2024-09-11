@@ -25,6 +25,8 @@
         width: 90%;
         max-width: 480px;
         color: var(--text-color);
+        max-height: 90%;
+        overflow: auto;
 
         h2 {
             margin: 0;
@@ -73,6 +75,7 @@
             font: inherit;
             width: 100%;
             background: none;
+            cursor: pointer;
         }
 
         input[type="text"],
@@ -83,6 +86,7 @@
             width: 100%;
             background: none;
             color: var(--text-color);
+            cursor: pointer;
 
             &::placeholder {
                 color: var(--grey-500);
@@ -108,6 +112,24 @@
                 background-color: var(--background-color-edit-box);
                 color: var(--grey-500);
                 padding: 16px;
+            }
+        }
+
+        /* errors */
+        .errorlist {
+            margin: 0;
+
+            li {
+                text-align: right;
+                color: var(--error);
+                margin-bottom: 8px;
+                padding-right: 6px;
+            }
+
+            &+input,
+            &+select,
+            &+textarea {
+                border-color: var(--error);
             }
         }
 
@@ -138,6 +160,11 @@
                     display: flex;
                     justify-content: end;
                     gap: 16px;
+
+                    &:nth-of-type(1) {
+                        flex-direction: column;
+                        gap: 0;
+                    }
 
                     span {
                         color: var(--grey-500);
@@ -202,7 +229,7 @@
             display: none;
         }
 
-       
+
 
         /* TASK VIEW FORM */
         h2+p {
@@ -224,6 +251,7 @@
                 background-color: var(--background-color-main);
                 padding: 14px 12px;
                 gap: 16px;
+                margin-bottom: 8px;
             }
 
             input[type="text"] {
@@ -231,6 +259,7 @@
                 font-size: 12px;
                 font-weight: 700;
                 padding: 0;
+                color: var(--text-color);
             }
 
             input[type="checkbox"] {
@@ -252,6 +281,7 @@
 
                 &:checked+input[type="text"] {
                     text-decoration: line-through;
+                    color: var(--grey-500);
                 }
             }
         }
@@ -285,19 +315,21 @@
             opacity: 0;
             overflow: hidden;
             position: absolute;
-            background-color: var(--background-color-edit-box);
+            background-color: var(--background-color-main);
             // width: 80%;
-            top: 70px;
-            left: auto;
-            left: 0;
+            top: 60px;
+            left: 10px;
             z-index: -1;
             transform: scaleX(0);
             transform-origin: top;
             transition: transform 0.4s, opacity 0.3s;
             display: flex;
             flex-direction: column;
+            align-items: start;
+            gap: 10px;
             border-radius: 8px;
             padding: 16px;
+            width: 192px;
 
             button {
                 color: var(--grey-500);
@@ -306,6 +338,15 @@
                     color: var(--error);
                 }
             }
+        }
+    }
+}
+
+/* tablet styles */
+@media screen and (min-width: 700px) {
+    #form-wrapper {
+        #form-modal {
+            padding: 32px;
         }
     }
 }

@@ -25,6 +25,9 @@
   width: 90%;
   max-width: 480px;
   color: var(--text-color);
+  max-height: 90%;
+  overflow: auto;
+  /* errors */
   /* BOARD FORM & TASK FORM */
   /* TASK VIEW FORM */
 }
@@ -66,6 +69,7 @@
   font: inherit;
   width: 100%;
   background: none;
+  cursor: pointer;
 }
 #form-wrapper #form-modal input[type=text],
 #form-wrapper #form-modal select,
@@ -75,6 +79,7 @@
   width: 100%;
   background: none;
   color: var(--text-color);
+  cursor: pointer;
   padding: 9px 16px;
   border: 1px solid rgba(130, 143, 163, 0.3568627451);
   border-radius: 6px;
@@ -98,6 +103,18 @@
   color: var(--grey-500);
   padding: 16px;
 }
+#form-wrapper #form-modal .errorlist {
+  margin: 0;
+}
+#form-wrapper #form-modal .errorlist li {
+  text-align: right;
+  color: var(--error);
+  margin-bottom: 8px;
+  padding-right: 6px;
+}
+#form-wrapper #form-modal .errorlist + input, #form-wrapper #form-modal .errorlist + select, #form-wrapper #form-modal .errorlist + textarea {
+  border-color: var(--error);
+}
 #form-wrapper #form-modal .formset-wrapper .form {
   display: flex;
   gap: 16px;
@@ -119,6 +136,10 @@
   display: flex;
   justify-content: end;
   gap: 16px;
+}
+#form-wrapper #form-modal .formset-wrapper .edit-form div:nth-of-type(1) {
+  flex-direction: column;
+  gap: 0;
 }
 #form-wrapper #form-modal .formset-wrapper .edit-form div span {
   color: var(--grey-500);
@@ -183,12 +204,14 @@
   background-color: var(--background-color-main);
   padding: 14px 12px;
   gap: 16px;
+  margin-bottom: 8px;
 }
 #form-wrapper #form-modal .task-view-form input[type=text] {
   border: none;
   font-size: 12px;
   font-weight: 700;
   padding: 0;
+  color: var(--text-color);
 }
 #form-wrapper #form-modal .task-view-form input[type=checkbox] {
   width: 20px;
@@ -208,6 +231,7 @@
 }
 #form-wrapper #form-modal .task-view-form input[type=checkbox]:checked + input[type=text] {
   text-decoration: line-through;
+  color: var(--grey-500);
 }
 #form-wrapper .task-view {
   position: relative;
@@ -229,24 +253,33 @@
   opacity: 0;
   overflow: hidden;
   position: absolute;
-  background-color: var(--background-color-edit-box);
-  top: 70px;
-  left: auto;
-  left: 0;
+  background-color: var(--background-color-main);
+  top: 60px;
+  left: 10px;
   z-index: -1;
   transform: scaleX(0);
   transform-origin: top;
   transition: transform 0.4s, opacity 0.3s;
   display: flex;
   flex-direction: column;
+  align-items: start;
+  gap: 10px;
   border-radius: 8px;
   padding: 16px;
+  width: 192px;
 }
 #form-wrapper .task-view .task-edit button {
   color: var(--grey-500);
 }
 #form-wrapper .task-view .task-edit button:nth-of-type(2) {
   color: var(--error);
+}
+
+/* tablet styles */
+@media screen and (min-width: 700px) {
+  #form-wrapper #form-modal {
+    padding: 32px;
+  }
 }
 
 /*# sourceMappingURL=forms.css.map */
