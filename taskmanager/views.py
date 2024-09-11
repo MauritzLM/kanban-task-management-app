@@ -121,12 +121,10 @@ def edit_board(request, id):
 # column form
 @login_required
 def column_form(request, current_total_formsets):
-   
-    new_total_formsets = current_total_formsets + 1
-    new_formset = build_new_formset(ColumnFormSet(), new_total_formsets)
+    new_formset = build_new_formset(ColumnFormSet(), current_total_formsets)
     context = {
         'new_formset': new_formset,
-        'new_total_formsets': new_total_formsets,
+        'new_total_formsets': current_total_formsets + 1,
     }
 
     return render(request, 'components/forms/column_form.html', context) 
