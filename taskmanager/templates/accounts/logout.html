@@ -1,9 +1,24 @@
-{% if user.is_authenticated %}
-    <h2>Logout form</h2>
-    <form action="{% url 'logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
-{% else %}
-    <a href="{% url 'login' %}">Login</a>
-{% endif %}
+{% extends "accounts/auth_base.html" %}
+
+{% block title %}
+    <title>Logout</title>
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <div class="form-wrapper">
+            <h2>Logout</h2>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="btn-primary" type="submit">Logout</button>
+            </form>
+        </div>
+    {% else %}
+        <div class="form-wrapper">
+            <p>
+                <a href="{% url 'login' %}">Login</a>
+            </p>
+        </div>
+    {% endif %}
+{% endblock %}

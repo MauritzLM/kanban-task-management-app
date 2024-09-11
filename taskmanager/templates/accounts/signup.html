@@ -1,12 +1,24 @@
-{% if user.is_authenticated %}
-    <p>You are already signed up.
-        <a href="{% url 'index' %}">Return to the home page.</a>
-    </p>
-{% else %}
-    <h2>Signup form</h2>
-    <form action="{% url 'sign-up' %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-            <button type="submit">Submit</button>
-    </form>
-{% endif %}
+{% extends "accounts/auth_base.html" %}
+
+{% block title %}
+    <title>Signup</title>
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="form-wrapper">
+            <p>You are already signed up.
+                <a href="{% url 'index' %}">Return to the home page.</a>
+            </p>
+        </div>
+    {% else %}
+        <div class="form-wrapper">
+            <h2>Signup</h2>
+            <form action="{% url 'sign-up' %}" method="post">
+                {% csrf_token %}
+                {{ form }}
+                    <button class="btn-primary" type="submit">Signup</button>
+                </form>
+            </div>
+        {% endif %}
+    {% endblock %}
