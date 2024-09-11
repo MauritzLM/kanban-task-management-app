@@ -26,6 +26,7 @@
 
             {% for column_form in formset %}
                 <div class="column-form form" _="on removeField remove me">
+                    {{ column_form.id }}
                     {{ column_form.col_name.errors }}
                     {{ column_form.col_name }}
                     <button type="button" _="on click trigger removeField"><img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/></button>

@@ -2,14 +2,14 @@
 <div class="new-formset-{{ new_total_formsets }} formset">
     <input hx-swap-oob="true" type="hidden" name="form-TOTAL_FORMS" value="{{ new_total_formsets }}" id="id_form-TOTAL_FORMS"/>
 
-        <div class="new-column-form new-formset">
-            {{ new_formset }}
-            <button type="button" _="on click add .hidden to .new-formset-{{ new_total_formsets }}">
-                <img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/>
-            </button>
-        </div>
-        <button class="btn-secondary" type="button" hx-trigger="click" hx-get="{% url 'add-column' new_total_formsets %}" hx-target=".columns-wrapper" hx-swap="beforeend" _="on click remove me">
-            + Add New Column
+    <div class="new-column-form new-formset">
+        {{ new_formset }}
+        <button _="on click add .hidden to .new-formset-{{ new_total_formsets }}" type="button">
+            <img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/>
         </button>
-    
+    </div>
+    <button class="btn-secondary" type="button" hx-trigger="click" hx-get="{% url 'add-column' new_total_formsets %}" hx-target=".columns-wrapper" hx-swap="beforeend" _="on click remove me">
+        + Add New Column
+    </button>
+
 </div>

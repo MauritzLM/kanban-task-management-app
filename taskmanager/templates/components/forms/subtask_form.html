@@ -4,8 +4,8 @@
 
     <div class="new-subtask-form new-formset">
         {{ new_formset }}
-        <button _="on click add .hidden to .new-formset-{{ new_total_formsets }}">
-        <img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/></button>
+        <button _="on click add .hidden to .new-formset-{{ new_total_formsets }}" type="button">
+            <img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/></button>
     </div>
 
     <button class="btn-secondary" type="button" hx-trigger="click" hx-get="{% url 'add-subtask' new_total_formsets %}" hx-target=".subtasks-wrapper" hx-swap="beforeend" _="on click remove me">
