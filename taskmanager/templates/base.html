@@ -12,13 +12,13 @@
                       user-scalable=no, target-densitydpi=device-dpi">
     <meta name="description" content="">
     <meta name="keywords" content="">
-    
-    <link rel="icon" href="{% static 'images/favicon-32x32.png' %}" />
+
+    <link rel="icon" href="{% static 'images/favicon-32x32.png' %}"/>
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <link rel="stylesheet" href="{% static 'css/forms.css' %}">
     {% block extrahead %}{% endblock %}
 
-    <script defer src="{% static 'js/script.js' %}"></script>
+    <script defer="defer" src="{% static 'js/script.js' %}"></script>
 
     {% block title %}
       <title>Taskapp</title>
@@ -39,9 +39,10 @@
             {% if board %}
               <div class="board-name">
                 <h2 class="heading-large">{{ board.name }}</h2>
-                {# nav toggle button #}
+                {# mobile nav toggle button #}
+                {# add focus to sidebar when active* #}
                 <button class="nav-toggle-btn" _="on click toggle .cs-active on .sidebar-wrapper
-                       on click toggle .cs-active on .nav-img"><img class="nav-img" alt="" src="{% static 'images/icon-chevron-down.svg' %}"/></button>
+                                                   on click toggle .cs-active on .selected-board"><img class="nav-img" alt="" src="{% static 'images/icon-chevron-down.svg' %}"/></button>
               </div>
 
               <div>
@@ -55,23 +56,30 @@
 
                   <div class="edit-wrapper">
                     <div class="board-edit">
-                      <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper">edit board</button>
-                      <button hx-get="{% url 'delete-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper">delete board</button>
+
+                      <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper
+                                                                                                        on click remove .cs-active from .board-edit">edit board</button>
+
+                      <button hx-get="{% url 'delete-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper
+                                                                                                          on click remove .cs-active from .board-edit">delete board</button>
                     </div>
                   </div>
 
                   {# empty board - disabled buttons #}
                 {% else %}
                   <button class="new-task-btn" disabled="disabled">
-                     +
+                    +
                     <span>add new task</span></button>
 
                   <button class="edit-toggle" _="on click toggle .cs-active on .board-edit"><img alt="" src="{% static 'images/icon-vertical-ellipsis.svg' %}" aria-hidden="true"/></button>
 
                   <div class="edit-wrapper">
                     <div class="board-edit">
-                      <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper">edit board</button>
-                      <button hx-get="{% url 'delete-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper">delete board</button>
+                      <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper
+                                                                                                        on click remove .cs-active from .board-edit">edit board</button>
+
+                      <button hx-get="{% url 'delete-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper
+                                                                                                          on click remove .cs-active from .board-edit">delete board</button>
                     </div>
                   </div>
                 {% endif %}
@@ -89,18 +97,38 @@
       </header>
 
       <main>
-        {# selected board #}
-        <div id="board-wrapper">
-          {% block content %}{% endblock %}
+        {# tablet / desktop sidebar toggle #}
+        <button class="desktop-nav-toggle" _="on click add .cs-active to .sidebar-wrapper">
+          <img alt="" src="{% static 'images/icon-show-sidebar.svg' %}"/>
+        </button>
+
+        {% if user.is_authenticated %}
+          {# selected board #}
+          <div id="board-wrapper">
+            {% block content %}{% endblock %}
+          </div>
+
+          {# form modal #}
+          <div id="form-wrapper" hx-target="this"></div>
+
+        {% else %}
+          <div class="auth-status">
+            <p>Welcome, new user. Please
+              <a href="{% url 'login' %}">log in.</a>
+            </p>
+            <p>or
+              <a href="{% url 'sign-up' %}">Signup</a>
+            </p>
+          </div>
+
         </div>
 
-        {# form modal #}
-        <div id="form-wrapper" hx-target="this"></div>
-      </main>
-    </div>
+      {% endif %}
+    </main>
+  </div>
 
-    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-    <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
-  </body>
+  <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
+</body>
 
 </html>
