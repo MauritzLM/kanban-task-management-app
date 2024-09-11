@@ -41,20 +41,21 @@ let waitForContentLoad = setInterval(function () {
         // set cs-active on selected board in sidebar
         // currently selected board
         let selected_board = document.querySelector('.board-name h2');
-    
-        // if there a board selected
-         if (selected_board !== null && selected_board !== 'undefined') {
-             // board list items
-             let user_boards_items = document.querySelectorAll('.board-list li');
-             // element containing name of boards
-             let user_boards_names = document.querySelectorAll('.board-list li a span');
 
-              user_boards_names.forEach((el, index) => {
-                  if (el.textContent === selected_board.textContent) {
-                      user_boards_items[index].classList.add('cs-active');
-                  }
-              });
-         }
+        // if there a board selected
+        if (selected_board !== null && selected_board !== 'undefined') {
+            // board list items
+            let user_boards_items = document.querySelectorAll('.board-list li');
+            // element containing name of boards
+            let user_boards_names = document.querySelectorAll('.board-list li a span');
+
+            user_boards_names.forEach((el, index) => {
+                if (el.textContent === selected_board.textContent) {
+                    user_boards_items[index].classList.add('cs-active');
+                }
+            });
+        }
+
 
 
         // Clear the interval
@@ -62,3 +63,14 @@ let waitForContentLoad = setInterval(function () {
     }
 
 }, 50);  // milliseconds.
+
+// form submissions success
+document.addEventListener('htmx:beforeSwap', (e) => {
+    if (e.detail.target.id == 'form-wrapper' && !e.detail.xhr.response) {
+        location.reload()
+    }
+});
+
+// htmx.on("boardChanged", (e) => {
+//     location.reload()
+// });
