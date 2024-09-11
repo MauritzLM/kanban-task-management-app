@@ -59,6 +59,7 @@
   padding: 23px 16px;
   width: 280px;
   box-shadow: 2px 2px 3px var(--box-shadow-color);
+  cursor: pointer;
 }
 #board-wrapper .columns-container .column ul li p:nth-child(1) {
   margin: 0;
