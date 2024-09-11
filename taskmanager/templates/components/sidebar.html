@@ -2,43 +2,56 @@
 {% load static %}
 {% if user.is_authenticated %}
     <div class="sidebar">
-        <div class="auth-status">
-            <p>Welcome,
-                {{ user.username }}.</p>
-            <a href="{% url 'logout' %}">Logout</a>
+        <div class="sidebar-section"> 
+            <div class="auth-status">
+                <p>Welcome,
+                    {{ user.username }}.</p>
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+
+            <div>
+                {% if all_boards %}
+                    <h3 class="heading-small">All boards ({{ all_boards|length }})</h3>
+
+                    <ul class="board-list">
+                        {% for board in all_boards %}
+                            <li>
+                                <a href="{{ board.get_absolute_url }}">
+                                    <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z" fill="#828FA3"/></svg>
+                                    <span>{{ board.name }}</span></a>
+                            </li>
+
+                        {% endfor %}
+                    </ul>
+
+                {% endif %}
+
+                <button class="new-board-btn" hx-get="{% url 'new-board' %}" hx-target="#form-wrapper" _="on click toggle .cs-active on .sidebar-wrapper
+                                                                                                       on click add .cs-active to #form-wrapper
+                                                                                                        on click remove .cs-active from .selected-board">
+
+                    <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z" fill="#635FC7"/></svg>
+                    <span>+ Create New Board</span>
+                </button>
+            </div>
         </div>
 
-        <div>
-            {% if all_boards %}
-                <h3 class="heading-small">All boards ({{ all_boards|length }})</h3>
+        {# theme toggle and sidebar hide btn #}
+        <div class="sidebar-section">
+            <div class="theme-toggle">
+                {% include "components/theme_toggle.html" %}
+            </div>
 
-                <ul class="board-list">
-                    {% for board in all_boards %}
-                        <li>
-                            <a href="{{ board.get_absolute_url }}">
-                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z" fill="#828FA3"/></svg>
-                                <span>{{ board.name }}</span></a>
-                        </li>
-
-                    {% endfor %}
-                </ul>
-
-            {% endif %}
-
-            <button class="new-board-btn" hx-get="{% url 'new-board' %}" hx-target="#form-wrapper" _="on click toggle .cs-active on .sidebar-wrapper
-                                                                                                       on click add .cs-active to #form-wrapper">
-
-                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z" fill="#635FC7"/></svg>
-                <span>+ Create New Board</span>
+            {# change image to svg* #}
+            <button class="hide-sidebar-btn heading-medium" _="on click remove .cs-active from .sidebar-wrapper">
+                <img src="{% static 'images/icon-hide-sidebar.svg' %}"/>
+                Hide Sidebar
             </button>
         </div>
+    </div>
 
-        {# theme toggle #}
-        <div class="theme-toggle">
-            {% include "components/theme_toggle.html" %}
-        </div>
-
-    {% else %}
+{% else %}
+    <div class="sidebar">
         <div class="auth-status">
             <p>Welcome, new user. Please
                 <a href="{% url 'login' %}">log in.</a>
@@ -49,7 +62,9 @@
         </div>
 
         {# theme toggle #}
+        <div class="theme-toggle">
+            {% include "components/theme_toggle.html" %}
+        </div>
     </div>
+</div>
 {% endif %}
-
-{# hide sidebar button (tablet/desktop)* #}
