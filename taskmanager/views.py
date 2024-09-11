@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -54,7 +56,15 @@ def board_form(request):
                 col.board = saved_board
                 col.save() 
             
-            return HttpResponse()
+            return HttpResponse(
+                status=204,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        "boardCreated": None,
+                        "showMessage": f"{saved_board.name} created."
+                    })
+                }
+            )
         
         # update column formset to include only not empty ones
     else:
@@ -89,7 +99,15 @@ def edit_board(request, id):
                 col.board = board_to_edit
                 col.save()
 
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponse(
+                status=204,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        "boardChanged": None,
+                        "showMessage": f"{board_to_edit.name} updated."
+                    })
+                }
+            )
 
     else:
         # create form from board instance
@@ -158,8 +176,16 @@ def task_view(request, id, t_id):
                 sub.task = updated_task
                 sub.save()
 
-            # redirect*
-            return HttpResponseRedirect(reverse('board-detail', args=[board.id]))
+            # response
+            return HttpResponse(
+                status=204,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        "taskChanged": None,
+                        "showMessage": f"{task.title} updated."
+                    })
+                }
+            )
     
     else:
         task_form = TaskViewForm(instance=task)
@@ -191,7 +217,15 @@ def new_task(request, id):
                 sub.save()
 
             # redirect*
-            return HttpResponseRedirect(reverse('board-detail', args=[board.id]))
+            return HttpResponse(
+                status=204,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        "taskCreated": None,
+                        "showMessage": f"{created_task.title} created."
+                    })
+                }
+            )
 
     else:
         task_form = TaskForm()
@@ -229,7 +263,15 @@ def edit_task(request, id, t_id):
                 sub.task = task_to_edit
                 sub.save()
 
-            return HttpResponseRedirect(reverse('board-detail', args=[board.id]))
+            return HttpResponse(
+                status=204,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        "taskChanged": None,
+                        "showMessage": f"{task_to_edit.title} updated."
+                    })
+                }
+            )
     
     else:
         task_form = TaskForm(instance=task_to_edit)
