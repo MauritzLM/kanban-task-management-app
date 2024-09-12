@@ -4,8 +4,10 @@
 
     <div class="new-column-form new-formset">
         {{ new_formset }}
-        <button _="on click add .hidden to .new-formset-{{ new_total_formsets }}" type="button">
-            <img alt="close" src="{% static 'images/icon-cross.svg' %}" height="15" width="15" decoding="async" loading="lazy"/>
+        <button class="remove-btn" _="on click add .hidden to .new-formset-{{ new_total_formsets }}" type="button">
+            <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg">
+                <g fill="#828FA3" fill-rule="evenodd"><path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z"/><path d="M0 2.122 2.122 0 14.85 12.728l-2.122 2.122z"/></g>
+            </svg>
         </button>
     </div>
     <button class="btn-secondary" type="button" hx-trigger="click" hx-get="{% url 'add-column' new_total_formsets %}" hx-target=".columns-wrapper" hx-swap="beforeend" _="on click remove me">
