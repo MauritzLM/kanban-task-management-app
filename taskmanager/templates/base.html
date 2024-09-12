@@ -27,108 +27,118 @@
   </head>
 
   <body>
-    <div id="container">
-      <header>
-        <nav>
-          {# logo #}
-          <div class="logo"><img alt="logo" src="{% static 'images/logo-mobile.svg' %}"/><img alt="logo-name" src="{% static 'images/logo-dark.svg' %}"/></div>
-          {# fetch sidebar #}
-          <div class="sidebar-wrapper" hx-get="{% url 'sidebar' %}" hx-trigger="load"></div>
 
-          <div class="selected-board">
-            {% if board %}
-              <div class="board-name">
-                <h2 class="heading-large">{{ board.name }}</h2>
-                {# mobile nav toggle button #}
-                {# add focus to sidebar when active* #}
-                <button class="nav-toggle-btn" _="on click toggle .cs-active on .sidebar-wrapper
+    <header>
+      <nav>
+        {# logo #}
+        <div class="logo">
+          <img alt="logo" src="{% static 'images/logo-mobile.svg' %}"/>
+          <img alt="logo-name" src="{% static 'images/logo-dark.svg' %}"/>
+          <img alt="logo-name" src="{% static 'images/logo-light.svg' %}"/></div>
+        {# fetch sidebar #}
+        <div class="sidebar-wrapper" hx-get="{% url 'sidebar' %}" hx-trigger="load"></div>
+
+        <div class="selected-board">
+          {% if board %}
+            <div class="board-name">
+              <h2 class="heading-large">{{ board.name }}</h2>
+              {# mobile nav toggle button #}
+              {# add focus to sidebar when active* #}
+              <button class="nav-toggle-btn" _="on click toggle .cs-active on .sidebar-wrapper
                                                    on click toggle .cs-active on .selected-board"><img class="nav-img" alt="" src="{% static 'images/icon-chevron-down.svg' %}"/></button>
-              </div>
+            </div>
 
-              <div>
-                {# new task button (disabled if no columns) #}
-                {% if board.columns.all|length > 0 %}
-                  <button class="new-task-btn" hx-get="{% url 'new-task' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper">
-                    +
-                    <span>add new task</span></button>
+            <div>
+              {# new task button (disabled if no columns) #}
+              {% if board.columns.all|length > 0 %}
+                <button class="new-task-btn heading-medium" hx-get="{% url 'new-task' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper">
+                  <img src="{% static 'images/icon-add-task-mobile.svg' %}" alt="new task" height="" width="" decoding="async"/>
+                  <span>+ Add New Task</span></button>
 
-                  <button class="edit-toggle" _="on click toggle .cs-active on .board-edit"><img alt="" src="{% static 'images/icon-vertical-ellipsis.svg' %}" aria-hidden="true"/></button>
+                <button class="edit-toggle" _="on click toggle .cs-active on .board-edit"><img alt="" src="{% static 'images/icon-vertical-ellipsis.svg' %}" aria-hidden="true"/></button>
 
-                  <div class="edit-wrapper">
-                    <div class="board-edit">
+                <div class="edit-wrapper">
+                  <div class="board-edit">
 
-                      <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper
+                    <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper
                                                                                                         on click remove .cs-active from .board-edit">edit board</button>
 
-                      <button hx-get="{% url 'delete-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper
+                    <button hx-get="{% url 'delete-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper
                                                                                                           on click remove .cs-active from .board-edit">delete board</button>
-                    </div>
                   </div>
+                </div>
 
-                  {# empty board - disabled buttons #}
-                {% else %}
-                  <button class="new-task-btn" disabled="disabled">
-                    +
-                    <span>add new task</span></button>
-
-                  <button class="edit-toggle" _="on click toggle .cs-active on .board-edit"><img alt="" src="{% static 'images/icon-vertical-ellipsis.svg' %}" aria-hidden="true"/></button>
-
-                  <div class="edit-wrapper">
-                    <div class="board-edit">
-                      <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper
-                                                                                                        on click remove .cs-active from .board-edit">edit board</button>
-
-                      <button hx-get="{% url 'delete-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper
-                                                                                                          on click remove .cs-active from .board-edit">delete board</button>
-                    </div>
-                  </div>
-                {% endif %}
-
+                {# empty board - disabled task button #}
               {% else %}
-                {# nav toggle button #}
-                <button class="nav-toggle-btn" _="on click toggle .cs-active on .sidebar-wrapper
+                <button class="new-task-btn heading-medium" disabled="disabled">
+                  <img src="{% static 'images/icon-add-task-mobile.svg' %}" alt="new task" height="" width="" decoding="async"/>
+                  <span>+ Add New Task</span></button>
+
+                <button class="edit-toggle" _="on click toggle .cs-active on .board-edit"><img alt="" src="{% static 'images/icon-vertical-ellipsis.svg' %}" aria-hidden="true"/></button>
+
+                <div class="edit-wrapper">
+                  <div class="board-edit">
+                    <button hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper
+                                                                                                        on click remove .cs-active from .board-edit">edit board</button>
+
+                    <button hx-get="{% url 'delete-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper
+                                                                                                          on click remove .cs-active from .board-edit">delete board</button>
+                  </div>
+                </div>
+              {% endif %}
+
+            {% else %}
+              <h2>Please select a board</h2>
+              {# nav toggle button #}
+              <button class="nav-toggle-btn" _="on click toggle .cs-active on .sidebar-wrapper
                        on click toggle .cs-active on .nav-img"><img class="nav-img" alt="" src="{% static 'images/icon-chevron-down.svg' %}"/></button>
 
-              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+
+      </nav>
+    </header>
+
+    <main>
+      {# tablet / desktop sidebar toggle #}
+      <button class="desktop-nav-toggle" _="on click add .cs-active to .sidebar-wrapper">
+        <img alt="" src="{% static 'images/icon-show-sidebar.svg' %}"/>
+      </button>
+
+      {% if user.is_authenticated %}
+        {% if user_boards %}
+          {% if user_boards|length == 0 %}
+            <div class="boards-empty">
+              <p class="heading-large">You haven't created any boards yet. Create a new board to get started</p>
+              <button class="btn-primary" hx-get="{% url 'new-board' %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper">+ Create New Board</button>
             </div>
-          </div>
+          {% endif %}
+        {% endif %}
 
-        </nav>
-      </header>
+        {# selected board #}
+        <div id="board-wrapper">
+          {% block content %}{% endblock %}
+        </div>
 
-      <main>
-        {# tablet / desktop sidebar toggle #}
-        <button class="desktop-nav-toggle" _="on click add .cs-active to .sidebar-wrapper">
-          <img alt="" src="{% static 'images/icon-show-sidebar.svg' %}"/>
-        </button>
+        {# form modal #}
+        <div id="form-wrapper" hx-target="this"></div>
 
-        {% if user.is_authenticated %}
-          {# selected board #}
-          <div id="board-wrapper">
-            {% block content %}{% endblock %}
-          </div>
-
-          {# form modal #}
-          <div id="form-wrapper" hx-target="this"></div>
-
-        {% else %}
-          <div class="auth-status">
-            <p>Welcome, new user. Please
-              <a href="{% url 'login' %}">log in.</a>
-            </p>
-            <p>or
-              <a href="{% url 'sign-up' %}">Signup</a>
-            </p>
-          </div>
-
+      {% else %}
+        <div class="auth-status">
+          <p class="heading-large">Welcome, new user. Please
+            <a href="{% url 'login' %}">log in.</a>
+          </p>
+          <p class="heading-large">or
+            <a href="{% url 'sign-up' %}">Signup</a>
+          </p>
         </div>
 
       {% endif %}
     </main>
-  </div>
 
-  <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-  <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
-</body>
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
+  </body>
 
 </html>
