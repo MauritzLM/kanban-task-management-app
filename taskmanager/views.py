@@ -10,7 +10,13 @@ from .models import Board, Column, Task, SubTask
 from .forms import BoardForm, ColumnFormSet, DeleteBoardForm, TaskForm, SubTaskFormSet, TaskViewForm, TaskViewFormSet, DeleteTaskForm
 
 # index page
-def index(request): 
+def index(request):
+    # if user is logged in get user boards
+    if request.user.is_authenticated:
+        user_boards = Board.objects.filter(user=request.user)
+        
+        return render(request, 'base.html', context={'user_boards': user_boards}) 
+    
     return render(request, 'base.html')
      
 # sidebar
@@ -38,8 +44,6 @@ def board_form(request):
     if request.method == 'POST':
         board_form = BoardForm(request.POST)
         column_formset = ColumnFormSet(request.POST)
-
-        print(request.POST)
 
         if board_form.is_valid() and column_formset.is_valid():
             # save board and get object
