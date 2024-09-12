@@ -86,7 +86,6 @@
             width: 100%;
             background: none;
             color: var(--text-color);
-            cursor: pointer;
 
             &::placeholder {
                 color: var(--grey-500);
@@ -103,6 +102,7 @@
             background: url("/static/images/icon-chevron-down.svg");
             background-position: right 16px center;
             background-repeat: no-repeat;
+            cursor: pointer;
 
             &:focus {
                 outline: 1px solid var(--primary);
@@ -113,6 +113,11 @@
                 color: var(--grey-500);
                 padding: 16px;
             }
+        }
+
+        input[type="text"],
+        textarea {
+            cursor: text;
         }
 
         /* errors */
@@ -130,6 +135,16 @@
             &+select,
             &+textarea {
                 border-color: var(--error);
+            }
+        }
+
+        .remove-btn {
+            &:hover {
+                svg {
+                    path {
+                        fill: var(--error);
+                    }
+                }
             }
         }
 
@@ -175,7 +190,7 @@
                     width: 20px;
                     height: 20px;
                     border-radius: 2px;
-                    border: 1px solid var(--grey-200);
+                    border: 1px solid #828fa348;
                     background-color: #FFF;
                     margin: 0;
                     padding: 5px;
@@ -252,6 +267,11 @@
                 padding: 14px 12px;
                 gap: 16px;
                 margin-bottom: 8px;
+                border-radius: 4px;
+
+                &:hover {
+                    background-color: #625fc727;
+                }
             }
 
             input[type="text"] {
@@ -268,7 +288,7 @@
                 border-radius: 2px;
                 margin: 0;
                 padding: 5px;
-                border: 1px solid var(--grey-200);
+                border: 1px solid #828fa348;
                 background-color: #FFF;
 
                 &:checked {

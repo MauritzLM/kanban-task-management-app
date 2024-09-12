@@ -1,7 +1,7 @@
 #board-wrapper {
     background-color: var(--background-color-main);
     // get correct height*
-    height: 100vh;
+    height: calc(100vh - 72px);
 
     .empty-board {
         height: 100%;
@@ -50,7 +50,49 @@
                     height: 15px;
                     width: 15px;
                     border-radius: 50%;
-                    background-color: aqua;
+                }
+            }
+            
+            // odd
+            &:nth-of-type(2n + 1) {
+                h3 {
+                    .dot {
+                        background-color: #49C4E5;
+                    }
+                }
+            }
+            
+            // even
+            &:nth-of-type(2n) {
+                h3 {
+                    .dot {
+                        background-color: #67E2AE;
+                    }
+                }
+            }
+
+            &:nth-of-type(1) {
+                h3 {
+                    .dot {
+                        background-color: #49C4E5;
+                    }
+                }
+            }
+
+            &:nth-of-type(2) {
+                h3 {
+                    .dot {
+                        background-color: #8471F2;
+                        
+                    }
+                }
+            }
+
+            &:nth-of-type(3) {
+                h3 {
+                    .dot {
+                        background-color: #67E2AE;
+                    }
                 }
             }
 
@@ -92,6 +134,11 @@
             color: var(--grey-500);
             background-color: var(--background-color-column-btn);
             border-radius: 6px;
+            margin-top: 39px;
+
+            &:hover {
+                color: var(--primary);
+            }
         }
     }
 }

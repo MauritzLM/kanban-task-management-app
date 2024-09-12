@@ -8,6 +8,9 @@ main .form-wrapper {
   padding: 24px;
   background-color: var(--background-color-surface);
   border-radius: 6px;
+  max-width: 480px;
+  min-width: 300px;
+  margin: 0 auto;
 }
 main .form-wrapper p {
   font-size: 15px;
@@ -19,6 +22,7 @@ main .form-wrapper form {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  /* errors */
 }
 main .form-wrapper form div {
   display: flex;
@@ -43,6 +47,18 @@ main .form-wrapper form div input {
 main .form-wrapper form div input::placeholder {
   color: var(--grey-500);
   opacity: 0.5;
+}
+main .form-wrapper form .errorlist {
+  margin: 0;
+}
+main .form-wrapper form .errorlist li {
+  text-align: right;
+  color: var(--error);
+  margin-bottom: 8px;
+  padding-right: 6px;
+}
+main .form-wrapper form .errorlist + input, main .form-wrapper form .errorlist + select, main .form-wrapper form .errorlist + textarea {
+  border-color: var(--error);
 }
 main .form-wrapper form .btn-primary {
   padding: 9px 0;

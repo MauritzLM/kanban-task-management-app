@@ -23,7 +23,7 @@ html[data-theme=light] {
   --background-color-column-btn: var(--grey-200);
   --box-shadow-color: var(--grey-200);
   --border-color: var(--grey-200);
-  --background-hover-color: #A8A4FF;
+  --background-hover-color: #625fc727;
 }
 
 html[data-theme=dark] {
@@ -78,12 +78,40 @@ body {
   font-size: 13px;
   font-weight: 500;
   line-height: 23px;
+  color: var(--text-color);
 }
 
-#container {
-  display: flex;
-  flex-direction: column;
-  color: var(--text-color);
+main {
+  min-height: calc(100vh - 72px);
+  position: relative;
+  background-color: var(--background-color-main);
+}
+main .desktop-nav-toggle {
+  display: none;
+}
+main .boards-empty {
+  position: relative;
+  top: 100px;
+  text-align: center;
+  padding: 0 24px;
+}
+main .boards-empty p {
+  color: var(--grey-500);
+  margin: 0;
+}
+main .boards-empty button {
+  width: 174px;
+  height: 48px;
+  margin-top: 24px;
+  border-radius: 25px;
+}
+main .auth-status {
+  position: relative;
+  top: 100px;
+  text-align: center;
+}
+main .auth-status p a {
+  color: var(--primary);
 }
 
 ul {
@@ -132,6 +160,9 @@ button {
   text-transform: capitalize;
   font-weight: 700;
 }
+.btn-primary:hover {
+  background-color: var(--primary-light);
+}
 
 .btn-secondary {
   background-color: var(--secondary-btn-bg);
@@ -140,6 +171,9 @@ button {
   text-transform: capitalize;
   font-weight: 700;
 }
+.btn-secondary:hover {
+  background-color: rgba(98, 95, 199, 0.2823529412);
+}
 
 .btn-delete {
   background-color: var(--error);
@@ -147,6 +181,9 @@ button {
   border-radius: 20px;
   text-transform: capitalize;
   font-weight: 700;
+}
+.btn-delete:hover {
+  background-color: var(--error-light);
 }
 
 .danger {
@@ -170,7 +207,7 @@ nav .logo {
   align-items: center;
   padding: 20px 16px;
 }
-nav .logo img:nth-of-type(2) {
+nav .logo img:nth-of-type(2), nav .logo img:nth-of-type(3) {
   display: none;
 }
 nav .cs-active .nav-toggle-btn .nav-img {
@@ -296,12 +333,11 @@ nav .selected-board div {
 nav .selected-board .new-task-btn {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 48px;
   height: 32px;
   border-radius: 24px;
   background-color: var(--primary);
-  font-weight: 700;
-  font-size: 20px;
   color: #FFF;
 }
 nav .selected-board .new-task-btn:disabled {
@@ -394,6 +430,9 @@ nav .theme-toggle div .slider {
   transition: 0.4s;
   border-radius: 12px;
 }
+nav .theme-toggle div .slider:hover {
+  background-color: var(--primary-light);
+}
 nav .theme-toggle div .slider:before {
   position: absolute;
   content: "";
@@ -413,28 +452,29 @@ nav .theme-toggle div input:checked + .slider:before {
   transform: translateX(16px);
 }
 
-main {
-  position: relative;
-}
-main .desktop-nav-toggle {
-  display: none;
-}
-
 /* tablet styles */
 @media screen and (min-width: 700px) {
+  html[data-theme=light] .logo img:nth-of-type(2) {
+    display: block;
+  }
+  html[data-theme=light] .logo img:nth-of-type(3) {
+    display: none;
+  }
+  html[data-theme=dark] .logo img:nth-of-type(2) {
+    display: none;
+  }
+  html[data-theme=dark] .logo img:nth-of-type(3) {
+    display: block;
+  }
   nav {
     border-bottom: 1px solid var(--border-color);
   }
   nav .logo {
     border-right: 1px solid var(--border-color);
     padding: 28px 24px;
-    width: 300px;
   }
   nav .logo img:nth-of-type(1) {
     display: none;
-  }
-  nav .logo img:nth-of-type(2) {
-    display: block;
   }
   nav .nav-toggle-btn {
     display: none;
@@ -453,6 +493,9 @@ main .desktop-nav-toggle {
   nav .hide-sidebar-btn:hover {
     background-color: var(--background-hover-color);
     color: var(--primary);
+  }
+  nav .hide-sidebar-btn:hover svg path {
+    fill: var(--primary);
   }
   nav .sidebar-wrapper {
     top: 0;
@@ -474,8 +517,22 @@ main .desktop-nav-toggle {
   nav .selected-board {
     padding: 28px 24px;
   }
+  nav .selected-board .new-task-btn {
+    width: 164px;
+    height: 48px;
+    align-items: center;
+  }
+  nav .selected-board .new-task-btn span {
+    display: inline;
+  }
+  nav .selected-board .new-task-btn img {
+    display: none;
+  }
   nav .theme-toggle {
     width: 250px;
+  }
+  main {
+    min-height: calc(100vh - 88px);
   }
   main .desktop-nav-toggle {
     display: flex;
@@ -490,9 +547,17 @@ main .desktop-nav-toggle {
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
   }
+  main .desktop-nav-toggle:hover {
+    background-color: var(--primary-light);
+  }
   main .desktop-nav-toggle img {
     position: relative;
     right: 3px;
+  }
+}
+@media screen and (min-width: 900px) {
+  nav .logo {
+    width: 300px;
   }
 }
 

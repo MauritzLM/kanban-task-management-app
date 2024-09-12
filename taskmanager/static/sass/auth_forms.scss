@@ -8,6 +8,9 @@ main {
         padding: 24px;
         background-color: var(--background-color-surface);
         border-radius: 6px;
+        max-width: 480px;
+        min-width: 300px;
+        margin: 0 auto;
 
         p {
             font-size: 15px;

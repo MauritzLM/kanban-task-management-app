@@ -79,7 +79,6 @@
   width: 100%;
   background: none;
   color: var(--text-color);
-  cursor: pointer;
   padding: 9px 16px;
   border: 1px solid rgba(130, 143, 163, 0.3568627451);
   border-radius: 6px;
@@ -94,6 +93,7 @@
   background: url("/static/images/icon-chevron-down.svg");
   background-position: right 16px center;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 #form-wrapper #form-modal select:focus {
   outline: 1px solid var(--primary);
@@ -102,6 +102,10 @@
   background-color: var(--background-color-edit-box);
   color: var(--grey-500);
   padding: 16px;
+}
+#form-wrapper #form-modal input[type=text],
+#form-wrapper #form-modal textarea {
+  cursor: text;
 }
 #form-wrapper #form-modal .errorlist {
   margin: 0;
@@ -114,6 +118,9 @@
 }
 #form-wrapper #form-modal .errorlist + input, #form-wrapper #form-modal .errorlist + select, #form-wrapper #form-modal .errorlist + textarea {
   border-color: var(--error);
+}
+#form-wrapper #form-modal .remove-btn:hover svg path {
+  fill: var(--error);
 }
 #form-wrapper #form-modal .formset-wrapper .form {
   display: flex;
@@ -148,7 +155,7 @@
   width: 20px;
   height: 20px;
   border-radius: 2px;
-  border: 1px solid var(--grey-200);
+  border: 1px solid rgba(130, 143, 163, 0.2823529412);
   background-color: #FFF;
   margin: 0;
   padding: 5px;
@@ -205,6 +212,10 @@
   padding: 14px 12px;
   gap: 16px;
   margin-bottom: 8px;
+  border-radius: 4px;
+}
+#form-wrapper #form-modal .task-view-form .form-group:hover {
+  background-color: rgba(98, 95, 199, 0.1529411765);
 }
 #form-wrapper #form-modal .task-view-form input[type=text] {
   border: none;
@@ -219,7 +230,7 @@
   border-radius: 2px;
   margin: 0;
   padding: 5px;
-  border: 1px solid var(--grey-200);
+  border: 1px solid rgba(130, 143, 163, 0.2823529412);
   background-color: #FFF;
 }
 #form-wrapper #form-modal .task-view-form input[type=checkbox]:checked {
