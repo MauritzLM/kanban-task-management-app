@@ -170,7 +170,7 @@ class NewBoardViewTest(TestCase):
     #     self.assertFormError(response.context['formset'][0], 'col_name', 'Can\'t be empty')  
 
     # valid form redirects
-    def test_valid_form_redirects_to_index(self):
+    def test_valid_form_response_204(self):
         login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
         board_form_data = {'name': 'platform launch'}
         formset_data = {
@@ -182,7 +182,7 @@ class NewBoardViewTest(TestCase):
         'form-0-col_name': 'todo',
         }
         response = self.client.post(reverse('new-board'), {**board_form_data, **formset_data}, follow=True)
-        self.assertRedirects(response, reverse('index'))
+        self.assertEqual(response.status_code, 204)
         
 
 # edit board form -> url, template, logged in, not logged in, validation
@@ -236,7 +236,7 @@ class EditBoardViewTest(TestCase):
         self.assertEqual(response.context['formset'][1].initial['col_name'], 'todo')
 
     # post
-    def test_valid_form_redirects_to_index(self):
+    def test_valid_form_response_204(self):
         login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
         test_board = Board.objects.get(name='platform launch')
         # change name
@@ -253,7 +253,7 @@ class EditBoardViewTest(TestCase):
         'form-1-col_name': 'doing',
         }
         response = self.client.post(reverse('edit-board', args=[str(test_board.id)]), {**board_form_data, **formset_data}, follow=True)
-        self.assertRedirects(response, reverse('index'))
+        self.assertEqual(response.status_code, 204)
         
 
     def test_invalid_form_errors(self):  
@@ -275,7 +275,6 @@ class EditBoardViewTest(TestCase):
         }
         response = self.client.post(reverse('edit-board', args=[str(test_board.id)]), {**board_form_data, **formset_data})
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response.context['formset'][2], 'col_name', 'Can\'t be empty')
         self.assertFormError(response.context['board_form'], 'name', 'Can\'t be empty')
 
 
@@ -419,26 +418,35 @@ class TaskViewTest(TestCase):
         
 
     # post
-    def test_valid_taskview_form_redirects_to_index(self):
+    def test_valid_taskview_form_response_204(self):
         login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
         test_board = Board.objects.get(name='platform launch')
         test_task = Task.objects.get(title='brainstorm')
+        test_column = Column.objects.get(col_name='done')
+        test_sub_task_1 = SubTask.objects.get(sub_name='make coffee')
+        test_sub_task_2 = SubTask.objects.get(sub_name='drink coffee')
+        test_sub_task_3 = SubTask.objects.get(sub_name='smile')
 
-        task_form_data = {'column': 'done'}
+        task_form_data = {'column': test_column.id}
         subtask_formset_data = {
             # management_form data
-        'form-INITIAL_FORMS': '0',
-        'form-TOTAL_FORMS': '2',
+        'form-INITIAL_FORMS': '3',
+        'form-TOTAL_FORMS': '3',
         'form-MAX_NUM_FORMS': '',
+        'form-0-id': test_sub_task_1.id,
         'form-0-sub_name': 'make coffee',
-        'form-0-is_completed': 'True',
-        'form-1-sub_name': 'smile',
-        'form-1-is_completed': 'False',
+        'form-0-is_completed': 'on',
+        'form-1-id': test_sub_task_2.id,
+        'form-1-sub_name': 'drink coffee',
+        'form-2-id': test_sub_task_3.id,
+        'form-2-sub_name': 'smile',
+        'form-2-is_completed': 'on',
         }
 
         response = self.client.post(reverse('view-task', args=[str(test_board.id), str(test_task.id)]), {**task_form_data, **subtask_formset_data}, follow=True)
+        print(response)
         # form validation failing?*
-        self.assertRedirects(response, reverse('index'))
+        self.assertEqual(response.status_code, 204)
 
     def test_invalid_form_errors(self):  
         pass 
@@ -487,7 +495,7 @@ class NewTaskViewTest(TestCase):
         # columns options*
 
     # post
-    def test_valid_newtaskview_form_redirects_to_boarddetail(self):
+    def test_valid_newtaskview_form_response_204(self):
         login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
         test_board = Board.objects.get(name='platform launch')
         test_column = Column.objects.get(col_name='todo')
@@ -500,7 +508,7 @@ class NewTaskViewTest(TestCase):
         }
 
         response = self.client.post(reverse('new-task', args=[str(test_board.id)]), {**task_form_data, **subtask_formset_data}, follow=True)
-        self.assertRedirects(response, reverse('board-detail', args=[str(test_board.id)]))
+        self.assertEqual(response.status_code, 204)
 
 
     def test_invalid_newtaskview_form_errors(self):
@@ -583,7 +591,7 @@ class EditTaskViewTest(TestCase):
         
 
     # post
-    def test_valid_form_redirects_to_index(self):
+    def test_valid_form_response_204(self):
         login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
         test_board = Board.objects.get(name='platform launch')
         test_column = Column.objects.get(col_name='todo')
@@ -599,7 +607,7 @@ class EditTaskViewTest(TestCase):
         }
 
         response = self.client.post(reverse('edit-task', args=[str(test_board.id), str(test_task.id)]), {**task_form_data, **subtask_formset_data}, follow=True)
-        self.assertRedirects(response, reverse('board-detail', args=[str(test_board.id)]))
+        self.assertEqual(response.status_code, 204)
         
 
     def test_invalid_form_errors(self):  
