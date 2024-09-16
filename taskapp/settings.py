@@ -17,11 +17,14 @@ from dotenv import load_dotenv
 
 import dj_database_url
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 # Load environment variables from .env file
-load_dotenv()
+env_path = load_dotenv(os.path.join(BASE_DIR, '.env'))
+load_dotenv(env_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+
 LOGIN_URL = 'login'
 
 
@@ -29,10 +32,10 @@ LOGIN_URL = 'login'
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-&psk#na5l=p3q8_a+-$4w1f^lt3lx1c@d*p4x$ymm_rn7pwb87')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['.amazonlightsail.com', 'localhost', '0.0.0.0', '127.0.0.1',]
 CSRF_TRUSTED_ORIGINS = ['https://localhost','https://*.amazonlightsail.com','https://127.0.0.1']
