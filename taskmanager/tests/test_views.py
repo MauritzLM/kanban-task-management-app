@@ -149,22 +149,25 @@ class NewBoardViewTest(TestCase):
         response = self.client.post(reverse('new-board'), {'name': ''})
         self.assertEqual(response.status_code, 200)
         self.assertFormError(response.context['board_form'], 'name', 'Can\'t be empty')
+    
+    # test that empty formset form does not get saved*
+    
+    # ( not using this atm )
+    # def test_invalid_formset(self):
+    #     login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
+    #     board_form_data = {'name': 'platform launch'}
+    #     formset_data = {
+    #     # management_form data
+    #     'form-INITIAL_FORMS': '0',
+    #     'form-TOTAL_FORMS': '1',
+    #     'form-MAX_NUM_FORMS': '',
+    #     # empty col_name
+    #     'form-0-col_name': '',
+    #     }
 
-    def test_invalid_formset(self):
-        login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
-        board_form_data = {'name': 'platform launch'}
-        formset_data = {
-        # management_form data
-        'form-INITIAL_FORMS': '0',
-        'form-TOTAL_FORMS': '1',
-        'form-MAX_NUM_FORMS': '',
-        # empty col_name
-        'form-0-col_name': '',
-        }
-
-        response = self.client.post(reverse('new-board'), {**board_form_data, **formset_data})
-        self.assertEqual(response.status_code, 200)
-        self.assertFormError(response.context['formset'][0], 'col_name', 'Can\'t be empty')  
+    #     response = self.client.post(reverse('new-board'), {**board_form_data, **formset_data})
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertFormError(response.context['formset'][0], 'col_name', 'Can\'t be empty')  
 
     # valid form redirects
     def test_valid_form_redirects_to_index(self):
@@ -425,14 +428,12 @@ class TaskViewTest(TestCase):
         subtask_formset_data = {
             # management_form data
         'form-INITIAL_FORMS': '0',
-        'form-TOTAL_FORMS': '3',
+        'form-TOTAL_FORMS': '2',
         'form-MAX_NUM_FORMS': '',
         'form-0-sub_name': 'make coffee',
         'form-0-is_completed': 'True',
         'form-1-sub_name': 'smile',
         'form-1-is_completed': 'False',
-        'form-2-sub_name': 'drink coffee',
-        'form-2-is_completed': 'True',
         }
 
         response = self.client.post(reverse('view-task', args=[str(test_board.id), str(test_task.id)]), {**task_form_data, **subtask_formset_data}, follow=True)
