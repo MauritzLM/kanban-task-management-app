@@ -37,8 +37,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-&psk#na5l=p3q8_a+-$4w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['.amazonlightsail.com', 'localhost', '0.0.0.0', '127.0.0.1',]
-CSRF_TRUSTED_ORIGINS = ['https://localhost','https://*.amazonlightsail.com','https://127.0.0.1']
+ALLOWED_HOSTS = ['web-production-b1cb.up.railway.app', 'localhost', '0.0.0.0', '127.0.0.1',]
+CSRF_TRUSTED_ORIGINS = ['https://localhost','https://web-production-b1cb.up.railway.app','https://127.0.0.1']
 
 
 # Application definition
