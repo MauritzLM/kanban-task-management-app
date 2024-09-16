@@ -1,0 +1,296 @@
+/* form modal / wrapper / general styles */
+#form-wrapper {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.247);
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: -10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* TASK VIEW MODAL */
+}
+#form-wrapper.cs-active {
+  opacity: 1;
+  z-index: 100;
+}
+#form-wrapper #form-modal {
+  background-color: var(--background-color-surface);
+  border-radius: 6px;
+  padding: 24px;
+  position: relative;
+  width: 90%;
+  max-width: 480px;
+  color: var(--text-color);
+  max-height: 90%;
+  overflow: auto;
+  /* errors */
+  /* BOARD FORM & TASK FORM */
+  /* TASK VIEW FORM */
+}
+#form-wrapper #form-modal h2 {
+  margin: 0;
+  font-size: 18px;
+}
+#form-wrapper #form-modal p {
+  margin: 24px 0;
+}
+#form-wrapper #form-modal .close-btn {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}
+#form-wrapper #form-modal .btn-primary,
+#form-wrapper #form-modal .btn-secondary,
+#form-wrapper #form-modal .btn-delete {
+  width: 100%;
+  padding: 9px;
+}
+#form-wrapper #form-modal .btn-primary {
+  margin-top: 24px;
+}
+#form-wrapper #form-modal .btn-secondary {
+  margin-top: 12px;
+}
+#form-wrapper #form-modal label,
+#form-wrapper #form-modal .label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--grey-500);
+  margin-bottom: 8px;
+  margin-top: 24px;
+}
+#form-wrapper #form-modal input {
+  appearance: none;
+  font: inherit;
+  width: 100%;
+  background: none;
+  cursor: pointer;
+}
+#form-wrapper #form-modal input[type=text],
+#form-wrapper #form-modal select,
+#form-wrapper #form-modal textarea {
+  appearance: none;
+  font: inherit;
+  width: 100%;
+  background: none;
+  color: var(--text-color);
+  padding: 9px 16px;
+  border: 1px solid rgba(130, 143, 163, 0.3568627451);
+  border-radius: 6px;
+}
+#form-wrapper #form-modal input[type=text]::placeholder,
+#form-wrapper #form-modal select::placeholder,
+#form-wrapper #form-modal textarea::placeholder {
+  color: var(--grey-500);
+  opacity: 0.5;
+}
+#form-wrapper #form-modal select {
+  background: url("/static/images/icon-chevron-down.svg");
+  background-position: right 16px center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+#form-wrapper #form-modal select:focus {
+  outline: 1px solid var(--primary);
+}
+#form-wrapper #form-modal select option {
+  background-color: var(--background-color-edit-box);
+  color: var(--grey-500);
+  padding: 16px;
+}
+#form-wrapper #form-modal input[type=text],
+#form-wrapper #form-modal textarea {
+  cursor: text;
+}
+#form-wrapper #form-modal .errorlist {
+  margin: 0;
+}
+#form-wrapper #form-modal .errorlist li {
+  text-align: right;
+  color: var(--error);
+  margin-bottom: 8px;
+  padding-right: 6px;
+}
+#form-wrapper #form-modal .errorlist + input, #form-wrapper #form-modal .errorlist + select, #form-wrapper #form-modal .errorlist + textarea {
+  border-color: var(--error);
+}
+#form-wrapper #form-modal .remove-btn:hover svg path {
+  fill: var(--error);
+}
+#form-wrapper #form-modal .formset-wrapper .form {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+#form-wrapper #form-modal .formset-wrapper .form button {
+  padding: 0;
+}
+#form-wrapper #form-modal .formset-wrapper .form button:last-of-type {
+  display: initial;
+}
+#form-wrapper #form-modal .formset-wrapper .edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+#form-wrapper #form-modal .formset-wrapper .edit-form div {
+  display: flex;
+  justify-content: end;
+  gap: 16px;
+}
+#form-wrapper #form-modal .formset-wrapper .edit-form div:nth-of-type(1) {
+  flex-direction: column;
+  gap: 0;
+}
+#form-wrapper #form-modal .formset-wrapper .edit-form div span {
+  color: var(--grey-500);
+}
+#form-wrapper #form-modal .formset-wrapper .edit-form input[type=checkbox] {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  border: 1px solid rgba(130, 143, 163, 0.2823529412);
+  background-color: #FFF;
+  margin: 0;
+  padding: 5px;
+}
+#form-wrapper #form-modal .formset-wrapper .edit-form input[type=checkbox]:checked {
+  background-color: var(--primary);
+  background-image: url("/static/images/icon-check.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  border-color: transparent;
+}
+#form-wrapper #form-modal .formset-wrapper .new-formset {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+#form-wrapper #form-modal .formset-wrapper .new-formset label {
+  display: none;
+}
+#form-wrapper #form-modal .formset-wrapper .new-formset input[type=text] {
+  width: 90%;
+}
+#form-wrapper #form-modal .formset-wrapper .new-formset input[type=checkbox] {
+  display: none;
+}
+#form-wrapper #form-modal .formset-wrapper .new-formset button {
+  padding: 0;
+}
+#form-wrapper #form-modal .formset-wrapper .new-formset button:last-of-type {
+  display: initial;
+}
+#form-wrapper #form-modal .btn-secondary {
+  display: none;
+}
+#form-wrapper #form-modal .btn-secondary:last-of-type {
+  display: initial;
+}
+#form-wrapper #form-modal .hidden {
+  display: none;
+}
+#form-wrapper #form-modal h2 + p {
+  color: var(--grey-500);
+  font-size: 15px;
+}
+#form-wrapper #form-modal .subtasks-count {
+  color: var(--grey-500);
+  font-weight: 700;
+  font-size: 12px;
+}
+#form-wrapper #form-modal .task-view-form .form-group {
+  display: flex;
+  align-items: center;
+  background-color: var(--background-color-main);
+  padding: 14px 12px;
+  gap: 16px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+#form-wrapper #form-modal .task-view-form .form-group:hover {
+  background-color: rgba(98, 95, 199, 0.1529411765);
+}
+#form-wrapper #form-modal .task-view-form input[type=text] {
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 0;
+  color: var(--text-color);
+}
+#form-wrapper #form-modal .task-view-form input[type=checkbox] {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  margin: 0;
+  padding: 5px;
+  border: 1px solid rgba(130, 143, 163, 0.2823529412);
+  background-color: #FFF;
+}
+#form-wrapper #form-modal .task-view-form input[type=checkbox]:checked {
+  background-color: var(--primary);
+  background-image: url("/static/images/icon-check.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  border-color: transparent;
+}
+#form-wrapper #form-modal .task-view-form input[type=checkbox]:checked + input[type=text] {
+  text-decoration: line-through;
+  color: var(--grey-500);
+}
+#form-wrapper .task-view {
+  position: relative;
+}
+#form-wrapper .task-view .edit-toggle {
+  float: left;
+  margin-right: 16px;
+}
+#form-wrapper .task-view .close-btn-task {
+  float: right;
+}
+#form-wrapper .task-view .edit-wrapper .task-edit.cs-active {
+  opacity: 1;
+  transform: scaleX(1);
+  transition-delay: 0.2s;
+  z-index: 10;
+}
+#form-wrapper .task-view .task-edit {
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  background-color: var(--background-color-main);
+  top: 60px;
+  left: 10px;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: top;
+  transition: transform 0.4s, opacity 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+  border-radius: 8px;
+  padding: 16px;
+  width: 192px;
+}
+#form-wrapper .task-view .task-edit button {
+  color: var(--grey-500);
+}
+#form-wrapper .task-view .task-edit button:nth-of-type(2) {
+  color: var(--error);
+}
+
+/* tablet styles */
+@media screen and (min-width: 700px) {
+  #form-wrapper #form-modal {
+    padding: 32px;
+  }
+}
+
+/*# sourceMappingURL=forms.css.map */
