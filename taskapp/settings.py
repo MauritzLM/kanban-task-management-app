@@ -139,9 +139,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if 'DATABASE_URL' in os.environ:
     DATABASES['default'] = dj_database_url.config(
-        conn_max_age=500,
-        conn_health_checks=True,
-    )
+         conn_max_age=500,
+         conn_health_checks=True,
+     )
+   
+
+
 
 
 # The absolute path to the directory where collectstatic will collect static files for deployment.
