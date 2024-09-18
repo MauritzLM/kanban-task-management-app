@@ -11,7 +11,7 @@
         </button>
     </div>
 
-    <button class="btn-secondary" type="button" hx-trigger="click" hx-get="{% url 'add-subtask' new_total_formsets %}" hx-target=".subtasks-wrapper" hx-swap="beforeend" _="on click remove me">
+    <button class="btn-secondary" hx-indicator="#spinner" type="button" hx-trigger="click" hx-get="{% url 'add-subtask' new_total_formsets %}" hx-target=".subtasks-wrapper" hx-swap="beforeend" _="on click remove me">
         + Add new subtask
     </button>
 

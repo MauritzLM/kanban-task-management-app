@@ -2,6 +2,7 @@
 {% load static %}
 {% load board_extras %}
 {% block extrahead %}
+    <link rel="preload" href="{% static 'css/board.css' %}" as="style">
     <link rel="stylesheet" href="{% static 'css/board.css' %}">
 {% endblock %}
 {# board top bar #}
@@ -28,7 +29,7 @@
                         <ul>
                             {% for task in column.tasks.all %}
 
-                                <li hx-get="{% url 'view-task' id=board.id t_id=task.id %}" hx-trigger="click" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper">
+                                <li hx-get="{% url 'view-task' id=board.id t_id=task.id %}" hx-indicator="#spinner-form" hx-swap="beforeend" hx-trigger="click" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper">
                                     <p class="heading-medium">{{ task.title }}</p>
 
                                     {# subtasks #}
@@ -41,7 +42,7 @@
                     </div>
 
                 {% endfor %}
-                <button class="btn-new-column" hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper">+ New Column</button>
+                <button class="btn-new-column" hx-get="{% url 'edit-board' id=board.id %}" hx-indicator="#spinner-form" hx-swap="beforeend" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper">+ New Column</button>
             </div>
 
         {% endif %}

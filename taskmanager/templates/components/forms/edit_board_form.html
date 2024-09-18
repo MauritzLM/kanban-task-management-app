@@ -11,6 +11,7 @@
 
         {{ formset.management_form }}
         <div class="columns-wrapper formset-wrapper">
+            
             {# load in columns #}
             {% for form in formset %}
                 <div class="edit-form">
@@ -25,7 +26,9 @@
                     </div>
                 </div>
             {% endfor %}
-            <button class="btn-secondary" type="button" hx-get="{% url 'add-column' formset.total_form_count %}" hx-target=".columns-wrapper" hx-swap="beforeend" _="on click remove me">+ Add New Column</button>
+
+            <span id="spinner" class="htmx-indicator">One moment..</span>
+            <button class="btn-secondary" type="button" hx-indicator="#spinner" hx-get="{% url 'add-column' formset.total_form_count %}" hx-target=".columns-wrapper" hx-swap="beforeend" _="on click remove me">+ Add New Column</button>
         </div>
 
         <button class="btn-primary" type="submit">Save Changes</button>
