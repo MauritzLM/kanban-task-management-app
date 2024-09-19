@@ -10,8 +10,8 @@
 
     {# display columns and tasks of board #}
     {% if board %}
-        {# if board is empty (format document creates icorrect space between list|length) #}
-        {% if board.columns.all|length == 0 %}
+        {# if board is empty (format document creates incorrect space between list|length) #}
+        {% if columns|length == 0 %}
             <div class="empty-board">
                 <p class="heading-large">This board is empty. Create a new column to get started.</p>
                 <button class="btn-primary" hx-get="{% url 'edit-board' id=board.id %}" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper">+ Add New Column</button>
@@ -19,7 +19,7 @@
         {% else %}
             {# for each column in board #}
             <div class="columns-container">
-                {% for column in board.columns.all %}
+                {% for column in columns %}
 
                     <div class="column">
                         <h3 class="heading-small">
