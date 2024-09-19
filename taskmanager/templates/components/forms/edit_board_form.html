@@ -27,7 +27,7 @@
                 </div>
             {% endfor %}
 
-            <span id="spinner" class="htmx-indicator">One moment..</span>
+            <span id="spinner" class="htmx-indicator">One moment...</span>
             <button class="btn-secondary" type="button" hx-indicator="#spinner" hx-get="{% url 'add-column' formset.total_form_count %}" hx-target=".columns-wrapper" hx-swap="beforeend" _="on click remove me">+ Add New Column</button>
         </div>
 
