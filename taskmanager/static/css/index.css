@@ -18,12 +18,12 @@ html[data-theme=light] {
   --text-color: var(--grey-900);
   --background-color-main: var(--grey-100);
   --background-color-surface: #FFF;
-  --secondary-btn-bg: #625fc72c;
+  --secondary-btn-bg: #625fc727;
   --text-color: var(--grey-900);
   --background-color-column-btn: var(--grey-200);
   --box-shadow-color: var(--grey-200);
   --border-color: var(--grey-200);
-  --background-hover-color: #625fc727;
+  --background-hover-color: #625fc72c;
 }
 
 html[data-theme=dark] {
@@ -172,7 +172,14 @@ button {
   font-weight: 700;
 }
 .btn-secondary:hover {
-  background-color: rgba(98, 95, 199, 0.2823529412);
+  background-color: var(--background-hover-color);
+}
+.btn-secondary:disabled {
+  opacity: 0.4;
+}
+.btn-secondary:disabled:hover {
+  background-color: var(--secondary-btn-bg);
+  color: var(--primary);
 }
 
 .btn-delete {
@@ -224,7 +231,7 @@ nav .sidebar-wrapper {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.247);
   position: fixed;
-  top: 70px;
+  top: 65px;
   left: 0;
   opacity: 0;
   z-index: -10;

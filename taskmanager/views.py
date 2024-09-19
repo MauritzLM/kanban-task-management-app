@@ -33,10 +33,14 @@ def get_sidebar(request):
 # view board
 @login_required
 def board_detail_view(request, id):
-    # user logged in
+    # improve db queries*
+    
+    # get board
     board = get_object_or_404(Board, id=id)
+    # get columns
+    columns = Column.objects.filter(board=board)
 
-    return render(request, 'components/board_detail.html', context={'board': board})
+    return render(request, 'components/board_detail.html', context={'board': board, 'columns': columns})
 
 # create board
 @login_required
@@ -65,10 +69,11 @@ def board_form(request):
                 headers={
                     'HX-Trigger': json.dumps({
                         "boardCreated": None,
-                        "showMessage": f"{saved_board.name} created."
+                        "showMessage": f"{saved_board.name} updated."
                     })
                 }
             )
+            
         
         # update column formset to include only not empty ones
     else:

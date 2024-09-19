@@ -23,7 +23,8 @@
         {{ formset.management_form }}
         {# dynamic formsets #}
         <div class="columns-wrapper formset-wrapper">
-
+            {# spinner indicator #}
+        
             {% for column_form in formset %}
                 <div class="column-form form" _="on removeField remove me">
                     {{ column_form.id }}
@@ -37,8 +38,9 @@
                 </div>
             {% endfor %}
 
-            <button class="btn-secondary" type="button" hx-get="{% url 'add-column' formset.total_form_count %}" hx-target=".columns-wrapper" hx-swap="beforeend" _="on click remove me">+ add new column</button>
+            <span id="spinner" class="htmx-indicator">One moment...</span>
 
+            <button class="btn-secondary" hx-indicator="#spinner" type="button" hx-get="{% url 'add-column' formset.total_form_count %}" hx-target=".columns-wrapper" hx-swap="beforeend" _="on click remove me">+ add new column</button>  
         </div>
 
         <button class="btn-primary" type="submit">create new board</button>
