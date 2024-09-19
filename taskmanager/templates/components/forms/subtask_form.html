@@ -11,8 +11,14 @@
         </button>
     </div>
 
-    <button class="btn-secondary" hx-indicator="#spinner" type="button" hx-trigger="click" hx-get="{% url 'add-subtask' new_total_formsets %}" hx-target=".subtasks-wrapper" hx-swap="beforeend" _="on click remove me">
-        + Add new subtask
-    </button>
+    {% if new_total_formsets < 5 %}
+        <button class="btn-secondary" hx-indicator="#spinner" type="button" hx-trigger="click" hx-get="{% url 'add-subtask' new_total_formsets %}" hx-target=".subtasks-wrapper" hx-swap="beforeend" _="on click remove me">
+            + Add new subtask
+        </button>
+    {% else %}
+        <button class="btn-secondary" disabled="disabled">
+            + Add new subtask
+        </button>
+    {% endif %}
 
 </div>

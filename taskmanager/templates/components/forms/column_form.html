@@ -10,7 +10,14 @@
             </svg>
         </button>
     </div>
-    <button class="btn-secondary" hx-indicator="#spinner" type="button" hx-trigger="click" hx-get="{% url 'add-column' new_total_formsets %}" hx-target=".columns-wrapper" hx-swap="beforeend" _="on click remove me">
-        + Add New Column
-    </button>
+    {% if new_total_formsets < 5 %}
+        <button class="btn-secondary" hx-indicator="#spinner" type="button" hx-trigger="click" hx-get="{% url 'add-column' new_total_formsets %}" hx-target=".columns-wrapper" hx-swap="beforeend" _="on click remove me">
+            + Add New Column
+        </button>
+    {% else %}
+        <button class="btn-secondary" disabled="disabled">
+            + Add New Column
+        </button>
+    {% endif %}
+
 </div>
