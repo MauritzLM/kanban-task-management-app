@@ -89,12 +89,12 @@ body {
 }
 
 main {
-    min-height: calc(100vh - 72px);
+    min-height: calc(100vh - 65px);
     position: relative;
     background-color: var(--background-color-main);
 
     .desktop-nav-toggle {
-        display: none;
+        visibility: collapse;
     }
 
     .boards-empty {
@@ -694,9 +694,10 @@ nav {
     }
 
     main {
-        min-height: calc(100vh - 88px);
+        min-height: calc(100vh - 82px);
 
         .desktop-nav-toggle {
+            visibility: visible;
             display: flex;
             justify-content: center;
             align-items: center;
