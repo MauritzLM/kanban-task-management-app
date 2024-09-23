@@ -82,12 +82,12 @@ body {
 }
 
 main {
-  min-height: calc(100vh - 72px);
+  min-height: calc(100vh - 65px);
   position: relative;
   background-color: var(--background-color-main);
 }
 main .desktop-nav-toggle {
-  display: none;
+  visibility: collapse;
 }
 main .boards-empty {
   position: relative;
@@ -539,9 +539,10 @@ nav .theme-toggle div input:checked + .slider:before {
     width: 250px;
   }
   main {
-    min-height: calc(100vh - 88px);
+    min-height: calc(100vh - 82px);
   }
   main .desktop-nav-toggle {
+    visibility: visible;
     display: flex;
     justify-content: center;
     align-items: center;
