@@ -57,16 +57,20 @@ let waitForContentLoad = setInterval(function () {
         }
 
         // add focus to sidebar when active
-        let sidebar_el = document.querySelector(".sidebar .new-board-btn");
-        let mobile_nav_btn = document.querySelector(".nav-toggle-btn");
-        let desktop_nav_btn = document.querySelector(".desktop-nav-toggle");
+        let sidebar_el = document.querySelector('.sidebar .new-board-btn');
+        let mobile_nav_btn = document.querySelector('.nav-toggle-btn');
+        let desktop_nav_btn = document.querySelector('.desktop-nav-toggle');
 
-        mobile_nav_btn.addEventListener("click", () => {
-            sidebar_el.focus()
+        mobile_nav_btn.addEventListener('click', () => {
+            if (sidebar_el !== null && sidebar_el !== 'undefined') {
+                sidebar_el.focus()
+            }
         });
 
-        desktop_nav_btn.addEventListener("click", () => {
-            sidebar_el.focus()
+        desktop_nav_btn.addEventListener('click', () => {
+            if (sidebar_el !== null && sidebar_el !== 'undefined') {
+                sidebar_el.focus()
+            }
         });
 
 
