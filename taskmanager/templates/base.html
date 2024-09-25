@@ -15,8 +15,6 @@
 
     <!-- Preloads -->
     <link rel="preload" href="{% static 'css/index.css' %}" as="style"/>
-    <link rel="preload" as="font" type="font/woff2" href="{% static 'fonts/plus-jakarta-sans-v8-latin-500.woff2' %}" crossorigin="crossorigin">
-    <link rel="preload" as="font" type="font/woff2" href="{% static 'fonts/plus-jakarta-sans-v8-latin-700.woff2' %}" crossorigin="crossorigin">
     
     <link rel="icon" href="{% static 'images/favicon-32x32.png' %}"/>
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
@@ -36,9 +34,9 @@
       <nav>
         {# logo #}
         <div class="logo">
-          <img alt="logo" src="{% static 'images/logo-mobile.svg' %}" decoding="async" height="" width=""/>
-          <img alt="logo-name" src="{% static 'images/logo-dark.svg' %}" decoding="async" height="" width=""/>
-          <img alt="logo-name" src="{% static 'images/logo-light.svg' %}" decoding="async" height="" width=""/></div>
+          <img alt="logo" src="{% static 'images/logo-mobile.svg' %}" decoding="async" loading="eager" height="" width=""/>
+          <img alt="logo-name" src="{% static 'images/logo-dark.svg' %}" decoding="async" loading="eager" height="" width=""/>
+          <img alt="logo-name" src="{% static 'images/logo-light.svg' %}" decoding="async" loading="eager" height="" width=""/></div>
         {# fetch sidebar #}
         <div class="sidebar-wrapper" hx-get="{% url 'sidebar' %}" hx-trigger="load"></div>
 
@@ -49,17 +47,17 @@
               {# mobile nav toggle button #}
               {# add focus to sidebar when active* #}
               <button class="nav-toggle-btn" _="on click toggle .cs-active on .sidebar-wrapper
-                                                   on click toggle .cs-active on .selected-board"><img class="nav-img" alt="" src="{% static 'images/icon-chevron-down.svg' %}" loading="lazy" decoding="async" height="" width=""/></button>
+                                                   on click toggle .cs-active on .selected-board"><img class="nav-img" alt="" src="{% static 'images/icon-chevron-down.svg' %}" loading="lazy" decoding="async" height="" width="" aria-label="mobile menu toggle"/></button>
             </div>
 
             <div>
               {# new task button (disabled if no columns) #}
               {% if board.columns.all|length > 0 %}
                 <button class="new-task-btn heading-medium" hx-indicator="#spinner-form" hx-get="{% url 'new-task' id=board.id %}" hx-swap="beforeend" hx-target="#form-wrapper" _="on click add .cs-active to #form-wrapper">
-                  <img src="{% static 'images/icon-add-task-mobile.svg' %}" alt="new task" height="" width="" decoding="async" loading="lazy"/>
+                  <img src="{% static 'images/icon-add-task-mobile.svg' %}" alt="new task" height="" width="" decoding="async" loading="eager"/>
                   <span>+ Add New Task</span></button>
 
-                <button class="edit-toggle" _="on click toggle .cs-active on .board-edit"><img alt="" src="{% static 'images/icon-vertical-ellipsis.svg' %}" aria-hidden="true" height="" width="" loading="lazy" decoding="async"/></button>
+                <button class="edit-toggle" _="on click toggle .cs-active on .board-edit"><img alt="" src="{% static 'images/icon-vertical-ellipsis.svg' %}" aria-hidden="true" height="" width="" loading="eager" decoding="async" aria-label="edit board toggle"/></button>
 
                 <div class="edit-wrapper">
                   <div class="board-edit">
@@ -75,10 +73,10 @@
                 {# empty board - disabled task button #}
               {% else %}
                 <button class="new-task-btn heading-medium" disabled="disabled">
-                  <img src="{% static 'images/icon-add-task-mobile.svg' %}" alt="new task" height="" width="" decoding="async" loading="lazy"/>
+                  <img src="{% static 'images/icon-add-task-mobile.svg' %}" alt="new task" height="" width="" decoding="async" loading="eager"/>
                   <span>+ Add New Task</span></button>
 
-                <button class="edit-toggle" _="on click toggle .cs-active on .board-edit"><img alt="" src="{% static 'images/icon-vertical-ellipsis.svg' %}" aria-hidden="true" decoding="async" loading="lazy"/></button>
+                <button class="edit-toggle" _="on click toggle .cs-active on .board-edit"><img alt="" src="{% static 'images/icon-vertical-ellipsis.svg' %}" aria-hidden="true" decoding="async" loading="eager" aria-label="edit board toggle"/></button>
 
                 <div class="edit-wrapper">
                   <div class="board-edit">
@@ -95,7 +93,7 @@
 
               {# nav toggle button #}
               <button class="nav-toggle-btn" _="on click toggle .cs-active on .sidebar-wrapper
-                       on click toggle .cs-active on .nav-img"><img class="nav-img" alt="" src="{% static 'images/icon-chevron-down.svg' %}" height="" width="" loading="lazy" decoding="async"/></button>
+                       on click toggle .cs-active on .nav-img"><img class="nav-img" alt="" src="{% static 'images/icon-chevron-down.svg' %}" height="" width="" loading="eager" decoding="async" aria-label="mobile menu toggle"/></button>
 
             {% endif %}
           </div>
@@ -106,7 +104,7 @@
 
     <main>
       {# tablet / desktop sidebar toggle #}
-      <button class="desktop-nav-toggle" _="on click add .cs-active to .sidebar-wrapper">
+      <button class="desktop-nav-toggle" _="on click add .cs-active to .sidebar-wrapper" aria-label="sidebar menu toggle">
         <img alt="" src="{% static 'images/icon-show-sidebar.svg' %}" height="" width="" loading="lazy" decoding="async"/>
       </button>
 
