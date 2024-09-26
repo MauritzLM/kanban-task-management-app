@@ -56,97 +56,96 @@ Users should be able to:
 #### Models
 
 1. Board 
-   - related to  Django User model with foreign key
-   - custom save method to return saved object
+   - Related to Django User model with foreign key
+   - Custom save method to return saved object
 
 2. Column
-   - related to Board model with foreign key
+   - Related to Board model with foreign key
 
 3. Task
-   - related to Column with foreign key
-   - custom save method to return saved object
+   - Related to Column with foreign key
+   - Custom save method to return saved object
 
 4. Subtask 
-   - related to Task with foreign key
+   - Related to Task with foreign key
 
 #### Views
 
 1. index
-   - finds user boards from db if user logged in
-   - renders base template
+   - Finds user boards from db if user logged in
+   - Renders base template
 
 2. get_sidebar
-   - finds user boards from db if user logged in
-   - renders sidebar component
+   - Finds user boards from db if user logged in
+   - Renders sidebar component
    
 ##### Requires login
 
 3. board_detail
-   - login required
-   - finds users' board using id in url and all columns of the board
-   - renders board_detail template
+   - Finds user's board using id in url and all columns of the board
+   - Renders board_detail template
 
 4. board_form
-   - on get request creates board form and empty column formset
-   - on post request, validates forms
-   - if forms are valid, it saves a new board then uses that board's id when saving columns. Then returns a 204 HTTP response.
-   - renders board_form component
+   - On get request creates board form and empty column formset
+   - On post request, validates forms
+   - If forms are valid, it saves a new board then uses that board's id when saving columns. Then returns a 204 HTTP response.
+   - Renders board_form component
 
 5. edit_board
-   - finds board using url id
-   - creates a board form using returned board
-   - if forms are valid, it saves the board and updates or deletes (if marked for deletion) columns. Then returns a 204 HTTP response
-   - renders edit_board_form component
+   - Finds board using url id
+   - Creates a board form using returned board
+   - If forms are valid, it saves the board and updates or deletes (if marked for deletion) columns. Then returns a 204 HTTP response
+   - Renders edit_board_form component
 
 6. column_form
-   - adds a form to the column formset
-   - builds a new formset using current_total_formsets from url and build_new_formset helper function
-   - passes new_formset and new_total_formsets in context
-   - renders column_form component
+   - Adds a form to the column formset
+   - Builds a new formset using current_total_formsets from url and build_new_formset helper function
+   - Passes new_formset and new_total_formsets in context
+   - Renders column_form component
 
 7. delete_board and delete_task
-   - finds object to delete and creates delete form
-   - if form is valid, deletes object and redirects to index
+   - Finds object to delete and creates delete form
+   - If form is valid, deletes object and redirects to index
 
 8. new_task
-   - finds board from id in url
-   - on get request creates task form and empty subtask formset
-   - on post request, validates forms
-   - changes the column queryset of the task_form to contain only columns from current board
-   - if forms are valid, it saves a new task then uses that task's id when saving subtasks. Then returns a 204 HTTP response.
-   - renders task_form component
+   - Finds board from id in url
+   - On get request creates task form and empty subtask formset
+   - On post request, validates forms
+   - Changes the column queryset of the task_form to contain only columns from the current board
+   - If forms are valid, it saves a new task then uses that task's id when saving subtasks. Then returns a 204 HTTP response.
+   - Renders task_form component
 
 9. edit_task
-   - finds task and board from id and t_id in url           
-   - creates a task form using returned task
-   - changes the column queryset of the task_form to contain only columns from current board
-   - if forms are valid, it saves the task and updates or deletes (if marked for deletion) subtasks. Then returns a 204 HTTP response
-   - renders edit_task_form component
+   - Finds task and board from id and t_id in url           
+   - Creates a task form using returned task
+   - Changes the column queryset of the task_form to contain only columns from the current board
+   - If forms are valid, it saves the task and updates or deletes (if marked for deletion) subtasks. Then returns a 204 HTTP response
+   - Renders edit_task_form component
 
 10. task_view
-   - finds task and board from id and t_id in url
-   - on get request, creates task form using returned task. Creates taskview formset (as subtask_formset) filtering by returned task and ordering by is_completed (completed items are first).
-   - changes the column queryset of the task_form to contain only columns from current board
-   - on post request, forms are validated and any column changes and subtask is_completed changes are saved. Then returns a 204 HTTP response     
-   - renders task_view component
+   - Finds task and board from id and t_id in url
+   - On get request, creates task form using returned task. Creates taskview formset (as subtask_formset) filtering by returned task and ordering by is_completed (completed items are first).
+   - Changes the column queryset of the task_form to contain only columns from the current board
+   - On post request, forms are validated and any column changes and subtask is_completed changes are saved. Then returns a 204 HTTP response     
+   - Renders task_view component
 
 11. subtask_form
-   - adds a form to the subtask formset
-   - builds a new formset using current_total_formsets from url and build_new_formset helper function
-   - passes new_formset and new_total_formsets in context
-   - renders subtask_form component
+   - Adds a form to the subtask formset
+   - Builds a new formset using current_total_formsets from url and build_new_formset helper function
+   - Passes new_formset and new_total_formsets in context
+   - Renders subtask_form component
 
 #### Auth Views
 
 1. signup
    - Uses UserCreationForm from django
-   - logs user in on if form is valid
+   - Logs user in if form is valid
 
 2. login
-   - uses custom login form 
+   - Uses custom login form 
 
 3. logout
-   - logs user out when submitted
+   - Logs user out when submitted
 
 #### Forms
     
@@ -181,13 +180,13 @@ Users should be able to:
 1. Column formset
    - Uses modelformsetfactory and column form
    - No extra forms
-   - can delete set to true
+   - Can delete set to true
 
 2. Subtask formset
    - Uses modelformsetfactory and subtask form
    - No extra forms
-   - can delete set to true
-   - placeholder widget for sub_name
+   - Can delete set to true
+   - Placeholder widget for sub_name
        
 3. Task view formset
    - Uses modelformsetfactory and subtask model
@@ -197,15 +196,15 @@ Users should be able to:
 
 #### Templates
 
-1. components
-   - the sidebar-wrapper in the base template makes a request to the sidebar url when the page loads
+1. Components
+   - The sidebar-wrapper in the base template makes a request to the sidebar url when the page loads
 
-2. forms
+2. Forms
    - Htmx swaps the requested form into the form wrapper in the base.html template
-   - forms are rendered manually as needed
-   - the add subtask/column button appends a new form to the formset, this button is disabled when there are 5 forms
-   - forms make htmx post requests otherwise the modal won't work correctly
-   - when a form is submitted successfully it either redirect to a url or reload the currect location:
+   - Forms are rendered manually as needed
+   - The add subtask/column button appends a new form to the formset, this button is disabled when there are 5 forms
+   - Forms make htmx post requests otherwise the modal won't work correctly
+   - When a form is submitted successfully it either redirects to a url or reloads the currect location:
 
    ```js
    document.addEventListener('htmx:beforeSwap', (e) => {
@@ -219,16 +218,15 @@ Users should be able to:
 
 ### Continued development
 
-- django rest framework
-- learn more about doing effective and efficient db queries
-- 
+- Django rest framework
+- Learn more about doing effective and efficient db queries
 
 ### Useful resources / Acknowledgments
 
 - [Django and htmx example 1](https://www.youtube.com/watch?v=3dyQigrEj8A&list=LL&index=17) - Great video tutorial and a blog that got me started 
 - [Django and htmx example 2](https://www.youtube.com/watch?v=L1VC-KpSoBk&list=LL&index=16) - Another great video tutorial that helped me understand I have to send htmx post requests in my forms.
 - [Dynamic formsets](https://stackoverflow.com/questions/74757197/the-right-way-to-dynamically-add-django-formset-instances-and-post-usign-htmx) - Very helpful post with answers about how to add formsets dynamically.
-- [formset validation](https://stackoverflow.com/questions/4481366/django-and-empty-formset-are-valid) - formset validation - empty forms added dynamically must not validate
+- [formset validation](https://stackoverflow.com/questions/4481366/django-and-empty-formset-are-valid) - Formset validation - empty forms added dynamically must not validate
 - [MDN Django Tutorial](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django) - Building a library application using django from start to finish. I used this as a reference throughout the project.
 - [Django documentation](https://www.djangoproject.com/) - Official documentation
 
