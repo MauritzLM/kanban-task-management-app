@@ -300,8 +300,17 @@ def delete_task(request, t_id):
 
         if delete_form.is_valid():
             task_to_delete.delete()
-
-        return HttpResponseRedirect(reverse('index'))
+            
+            return HttpResponse(
+                status=204,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        "taskChanged": None,
+                        "showMessage": "task deleted"
+                    })
+                }
+            )
+           
     
     else:
         context = {
