@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'taskmanager.apps.TaskmanagerConfig'
 ]
 
@@ -62,6 +63,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',   
+]
+
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 ROOT_URLCONF = 'taskapp.urls'
@@ -92,6 +98,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'CONN_MAX_AGE': 3600,
     }
 }
 
@@ -143,9 +150,6 @@ if 'DATABASE_URL' in os.environ:
          conn_health_checks=True,
      )
    
-
-
-
 
 # The absolute path to the directory where collectstatic will collect static files for deployment.
 STATIC_ROOT = BASE_DIR / 'staticfiles'
