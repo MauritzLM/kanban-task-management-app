@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-# Add URL maps to redirect the base URL to our application
+# Add URL maps to redirect the base URL
 from django.views.generic import RedirectView
 
 
