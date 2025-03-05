@@ -19,7 +19,6 @@ from django.urls import include, path
 # Add URL maps to redirect the base URL
 from django.views.generic import RedirectView
 
-
 urlpatterns = [
     path('taskmanager/', include('taskmanager.urls')),
     path('admin/', admin.site.urls),
