@@ -249,11 +249,17 @@ nav {
         }
     }
 
+    .nav-toggle-btn {
+        width: 50px;
+    }
+
     // mobile nav toggle button
     .cs-active {
         .nav-toggle-btn {
             .nav-img {
                 transform: rotate(180deg);
+                position: relative;
+                bottom: 2px;
             }
         }
     }
@@ -272,7 +278,7 @@ nav {
         background-color: rgba(0, 0, 0, 0.247);
         position: fixed;
         // height of top bar
-        top: 65px;
+        top: 72px;
         left: 0;
         opacity: 0;
         z-index: -10;
@@ -405,7 +411,11 @@ nav {
         align-items: center;
         justify-content: space-between;
         flex-grow: 1;
-        padding: 20px 16px;
+        padding: 20px 16px 20px 0;
+
+        .heading-large {
+            font-size: 16px;
+        }
 
         div {
             display: flex;
@@ -438,6 +448,7 @@ nav {
             display: flex;
             width: 30px;
             justify-content: center;
+
         }
 
         .board-name {
@@ -468,9 +479,10 @@ nav {
         overflow: hidden;
         position: absolute;
         background-color: var(--background-color-main);
-        top: 60px;
+        border: 1px solid var(--grey-500);
+        top: 80px;
         left: auto;
-        right: 10px;
+        right: 20px;
         z-index: -1;
         transform: scaleX(0);
         transform-origin: top;
@@ -676,6 +688,10 @@ nav {
 
         .selected-board {
             padding: 28px 24px;
+
+            .heading-large {
+                font-size: 18px;
+            }
 
             .new-task-btn {
                 width: 164px;
