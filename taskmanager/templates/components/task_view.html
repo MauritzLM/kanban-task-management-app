@@ -7,8 +7,8 @@
     <button class="edit-toggle" _="on click toggle .cs-active on .task-edit"><img alt="" src="{% static 'images/icon-vertical-ellipsis.svg' %}" aria-hidden="true"/></button>
     <div class="edit-wrapper">
         <div class="task-edit">
-            <button hx-get="{% url 'edit-task' id=board.id t_id=task.id %}" hx-target="#form-wrapper">edit task</button>
-            <button hx-get="{% url 'delete-task' t_id=task.id %}" hx-target="#form-wrapper">delete task</button>
+            <button hx-get="{% url 'edit-task' id=board.id t_id=task.id %}" hx-target="#form-modal" hx-swap="outerHTML">edit task</button>
+            <button hx-get="{% url 'delete-task' t_id=task.id %}" hx-target="#form-modal" hx-swap="outerHTML">delete task</button>
         </div>
     </div>
 
@@ -26,6 +26,7 @@
         {% for form in subtask_formset %}
             <div class="form-group">
                 {{ form.id }}
+                <label class="checkbox-label" for="{{ form.is_completed.id_for_label }}"></label>
                 {{ form.is_completed }}
                 
                 {{ form.sub_name }}

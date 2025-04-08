@@ -1,14 +1,14 @@
 <div id="form-modal" _="on closeModal remove me">
-    <h2>Delete this task?</h2>
-    <form action="{% url 'delete-task' task_to_delete.id %}" method="post" novalidate="novalidate">
+    <h2 class="heading-large danger">Delete this task?</h2>
+    <form hx-post="{% url 'delete-task' task_to_delete.id %}" method="post" novalidate="novalidate">
 
         {% csrf_token %}
         {{ delete_form }}
         <p>Are you sure you want to delete the '{{task_to_delete.title}}' task and its subtasks? This action cannot be reversed.</p>
 
         <div>
-            <button type="submit">delete</button>
-            <button type="button" class="close-btn btn-secondary" _="on click remove .cs-active from #form-wrapper
+            <button type="submit" class="btn-delete">delete</button>
+            <button type="button" class="btn-secondary" _="on click remove .cs-active from #form-wrapper
                                                         on click trigger closeModal">Cancel</button>
         </div>
     </form>

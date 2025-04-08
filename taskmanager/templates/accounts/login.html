@@ -17,6 +17,9 @@
             <h2 class="heading-large">Login</h2>
             <p>Need to
                 <a href="{% url 'sign-up' %}">signup</a>?</p>
+            {% if login_status %}
+                <p class="danger">{{ login_status }}</p>
+            {% endif %}    
             <form action="{% url 'login' %}" method="post">
                 {% csrf_token %}
                 {{ form }}

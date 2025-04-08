@@ -51,12 +51,14 @@ class LoginView(TemplateView):
             # log user in
             user = authenticate(username=username, password=password)
 
+            print(user)
+
             if user is not None:
                 login(request, user)
 
                 return HttpResponseRedirect(reverse('index'))
 
-        return render(request, self.template_name, context={'form': form})        
+        return render(request, self.template_name, context={'form': form, 'login_status': 'invalid username or password'})        
 
 
 

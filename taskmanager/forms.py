@@ -113,10 +113,10 @@ class SubTaskForm(ModelForm):
             },
         }
 
-     # can't submit empty form
-    def __init__(self, *arg, **kwarg):
-        super(SubTaskForm, self).__init__(*arg, **kwarg)
-        self.empty_permitted = False    
+     # can't submit empty form (not in use)
+    # def __init__(self, *arg, **kwarg):
+    #     super(SubTaskForm, self).__init__(*arg, **kwarg)
+    #     self.empty_permitted = False    
     
     # custom name field error message
     def clean(self):

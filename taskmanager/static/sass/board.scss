@@ -2,6 +2,7 @@
     background-color: var(--background-color-main);
     // get correct height*
     height: calc(100vh - 72px);
+    overflow: auto;
 
     .empty-board {
         height: 100%;
@@ -32,7 +33,7 @@
         gap: 24px;
         padding: 24px 16px;
         height: 100%;
-        overflow: auto;
+        overflow: visible;
 
         .column {
             min-width: 280px;
@@ -134,7 +135,6 @@
             color: var(--grey-500);
             background-color: var(--background-color-column-btn);
             border-radius: 6px;
-            margin-top: 39px;
 
             &:hover {
                 color: var(--primary);
