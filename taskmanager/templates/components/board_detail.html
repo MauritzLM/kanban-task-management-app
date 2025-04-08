@@ -2,6 +2,7 @@
 {% load static %}
 {% load board_extras %}
 {% block extrahead %}
+    <link rel="preload" href="{% static 'css/board.css' %}" as="style">
     <link rel="stylesheet" href="{% static 'css/board.css' %}">
 {% endblock %}
 {# board top bar #}

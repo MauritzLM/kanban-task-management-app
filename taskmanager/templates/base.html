@@ -13,11 +13,14 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 
+    <link rel="preload" href="{% static 'css/index.css' %}" as="style">
+    
+    {% block extrahead %}{% endblock %}
+
     <link rel="icon" href="{% static 'images/favicon-32x32.png' %}"/>
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <link rel="stylesheet" href="{% static 'css/forms.css' %}">
-    {% block extrahead %}{% endblock %}
-
+    
     <script defer="defer" src="{% static 'js/script.js' %}"></script>
 
     {% block title %}
